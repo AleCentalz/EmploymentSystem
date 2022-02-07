@@ -2,26 +2,30 @@ package com.casestudy.employeessystem.cotrollers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.casestudy.employeessystem.models.Employee;
-import com.casestudy.employeessystem.repositories.IEmployeeRepo;
+import com.casestudy.employeessystem.repositories.IEmployeeRepository;
 
 @Controller
 public class SystemsController {
 	
 	@Autowired
-	private IEmployeeRepo repo;
+	private IEmployeeRepository repo; //dependency injection
 	
-	@GetMapping("/")
+	@GetMapping("/") //home page
 	public String welcome() {
 		return "index";
 	}
 	
-	@GetMapping("/addEmployee")
+	@GetMapping("/addEmployee") //add an employee
 	public String addEmpl() {
 		return "addEmployee";
 	}
@@ -37,8 +41,12 @@ public class SystemsController {
 	}
 	
 	@PostMapping("/addEmployee")
-	public String addNewEmployee() {
-		return "";
+	public String addNewEmployee(@Valid Employee empl, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "addEmployee";
+		}
+		this.repo.save(empl);
+		return "index";
 	}
 	
 
