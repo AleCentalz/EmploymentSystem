@@ -26,12 +26,12 @@ public class SystemsController {
 	
 	@GetMapping("/") //home page
 	public String welcome() {
-		return "index";
+		return "welcome";
 	}
 	
-	@GetMapping("/addEmployee") //add an employee
+	@GetMapping("/add_form") //add an employee
 	public String addEmpl() {
-		return "addEmployee";
+		return "add_employee";
 	}
 	
 	@GetMapping("/all")
@@ -39,9 +39,9 @@ public class SystemsController {
 		return (List<Employee>) repo.findAll();
 	}
 	
-	@GetMapping("/searchEmployee")
+	@GetMapping("/search")
 	public String searchEmpl() {
-		return "searchEmployee";
+		return "search";
 	}
 	
 	@GetMapping("/employees")
@@ -56,13 +56,13 @@ public class SystemsController {
 		return "employees";
 	}
 	
-	@PostMapping("/addEmployee")
+	@PostMapping("/add_employee")
 	public String addNewEmployee(@Valid Employee empl, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			return "addEmployee";
+			return "add_employee";
 		}
 		this.repo.save(empl);
-		return "index";
+		return "redirect:/";
 	}
 	
 
