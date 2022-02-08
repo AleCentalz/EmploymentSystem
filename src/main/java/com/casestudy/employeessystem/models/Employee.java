@@ -18,20 +18,19 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int uid;
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false, length = 45)
 	@NotBlank
 	private	String firstName;
-	@Column(name = "middle_name")
+	@Column(name = "middle_name", nullable = true, length = 45)
 	private String middleName;
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false, length = 45)
 	private String lastName;
-	@Column(name = "position")
+	@Column(name = "position", nullable = false, length = 45)
 	private String position;
-	@Column(name = "birth_date")
+	@Column(name = "birth_date", nullable = false, length = 45)
 	private String birthDate;
+	
 
-	
-	
 	public int getUid() {
 		return uid;
 	}

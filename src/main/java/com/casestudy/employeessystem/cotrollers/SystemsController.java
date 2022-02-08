@@ -1,5 +1,6 @@
 package com.casestudy.employeessystem.cotrollers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.repositories.IEmployeeRepository;
+import com.casestudy.employeessystem.service.EmployeeService;
 
 @Controller
 public class SystemsController {
 	
 	@Autowired
 	private IEmployeeRepository repo; //dependency injection
+	@Autowired
+	private EmployeeService service;
 	
 	@GetMapping("/") //home page
 	public String welcome() {
@@ -38,6 +42,18 @@ public class SystemsController {
 	@GetMapping("/searchEmployee")
 	public String searchEmpl() {
 		return "searchEmployee";
+	}
+	
+	@GetMapping("/employees")
+	public String listEmployees(Model model) {
+		try {
+			model.addAttribute("employees", service.listAllEmployees());		
+		}
+		catch(Exception ex) {
+			System.out.println(ex);
+		}
+		
+		return "employees";
 	}
 	
 	@PostMapping("/addEmployee")
