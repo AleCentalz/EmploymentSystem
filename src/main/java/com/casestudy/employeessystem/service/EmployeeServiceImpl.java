@@ -19,4 +19,24 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return repo.findAll();
 	}
 
+	@Override
+	public Employee saveEmployees(Employee employee) {
+		return repo.save(employee);
+	}
+
+	@Override
+	public Employee updateEmployee(Employee employee) {
+		return repo.save(employee);
+	}
+
+	@Override
+	public Employee getEmployeeById(int uid) {
+		return repo.getById(uid);
+	}
+	
+	@Override
+	public List<Employee> findEmployee(String fisrtName, String lastName, String position) {
+		return repo.findByFirstNameOrLastNameOrPosition(fisrtName, lastName, position);
+	}
+
 }

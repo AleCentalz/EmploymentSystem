@@ -23,21 +23,21 @@ class EmployeessystemApplicationTests {
 		IEmployeeRepository repo = context.getBean(IEmployeeRepository.class);
 		
 		Employee employee = new Employee();
-		employee.setUid(3); //this should do it the DB 
-		employee.setFirstName("Iris");
-		employee.setMiddleName("Fernanda");
-		employee.setLastName("Centeno");
-		employee.setBirthDate("05/10/83");
+		//employee.setUid(1); //this should do it the DB 
+		employee.setFirstName("Raul");
+		//employee.setMiddleName("Manuel");
+		employee.setLastName("Mancilla");
+		employee.setBirthDate("17/02/87");
 		employee.setPosition("Employee");
-		//repo.save(employee); //* CREATE *
+		repo.save(employee); //* CREATE *
 		
 		// * READ *
 		// I should read by first name, last name or position ... or a combination of them
-		List<Employee> result = repo.findByFirstNameOrLastNameOrPosition("Alejandra","Centeno",""); //search by name, last name or position
+		/*List<Employee> result = repo.findByFirstNameOrLastNameOrPosition("Alejandra","Centeno",""); //search by name, last name or position
 		if(result.isEmpty()) 
 			System.out.println("Employee not found"); //check to prevent a null pointer
 		else
-			System.out.println(result);
+			System.out.println(result);*/
 		
 		// * UPDATE * 
 		//Optional<Employee> result = repo.findById(3); //search by id
@@ -46,7 +46,7 @@ class EmployeessystemApplicationTests {
 		//repo.save(employee);
 		
 		// * READ ALL *
-		//repo.findAll().forEach(p->{System.out.println(p.getFirstName());}); //lamda expression
+		repo.findAll().forEach(p->{System.out.println(p.getFirstName());}); //lamda expression
 		
 		// * DELETE * this will delete the user #3 
 		//if(result.isPresent()) {

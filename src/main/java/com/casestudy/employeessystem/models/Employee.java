@@ -16,11 +16,10 @@ import javax.validation.constraints.NotBlank;
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int uid;
 	@Column(name = "first_name", nullable = false, length = 45)
-	@NotBlank
-	private	String firstName;
+	private String firstName;
 	@Column(name = "middle_name", nullable = true, length = 45)
 	private String middleName;
 	@Column(name = "last_name", nullable = false, length = 45)
@@ -29,7 +28,7 @@ public class Employee {
 	private String position;
 	@Column(name = "birth_date", nullable = false, length = 45)
 	private String birthDate;
-	
+
 
 	public int getUid() {
 		return uid;
@@ -84,12 +83,12 @@ public class Employee {
 		return "Employee [uid=" + uid + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + ", position=" + position + ", birthDate=" + birthDate + "]";
 	}
-	
-	/* LocalDate date = LocalDate.now();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
-	birthDate = date.format(formatter);
-	LocalDate parsedDate = LocalDate.parse(birthDate, formatter); */
-	
-	
-	
+
+	/*
+	 * LocalDate date = LocalDate.now(); DateTimeFormatter formatter =
+	 * DateTimeFormatter.ofPattern("dd MM yyyy"); birthDate =
+	 * date.format(formatter); LocalDate parsedDate = LocalDate.parse(birthDate,
+	 * formatter);
+	 */
+
 }

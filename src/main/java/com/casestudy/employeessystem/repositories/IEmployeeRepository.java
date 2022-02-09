@@ -13,8 +13,5 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	//CRUDRepository executes the SQL statements
 	//JpaRepository can create the DAO implementation
-	List<Employee> findByFirstName(String firstName);
-	List<Employee> findByLastName(String lastName);
-	List<Employee> findByPosition(String position);
 	List<Employee> findByFirstNameOrLastNameOrPosition(String fisrtName, String lastName, String position);
 }
