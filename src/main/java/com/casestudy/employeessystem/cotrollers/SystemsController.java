@@ -24,7 +24,12 @@ public class SystemsController {
 	@Autowired
 	private EmployeeService service;
 	
-	@GetMapping("/") //home page
+	@GetMapping("/") //login page
+	public String login() {
+		return "login";
+	}
+	
+	@GetMapping("/welcome") //home page
 	public String welcome() {
 		return "welcome";
 	}
