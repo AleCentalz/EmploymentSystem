@@ -43,11 +43,11 @@ DROP TABLE IF EXISTS `employees_system`.`Employee` ;
 
 CREATE TABLE IF NOT EXISTS `employees_system`.`Employee` (
   `uid` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `middle_name` VARCHAR(45) NULL DEFAULT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
+  `firstName` VARCHAR(45) NOT NULL,
+  `middleName` VARCHAR(45) NULL DEFAULT NULL,
+  `lastName` VARCHAR(45) NOT NULL,
   `position` VARCHAR(45) NOT NULL,
-  `birth_date` VARCHAR(45) NOT NULL,
+  `birthDate` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`uid`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
@@ -72,3 +72,19 @@ COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- -----------------------------------------------------
+-- Table `employees_system`.`User`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `employees_system`.`User` ;
+
+CREATE TABLE `User` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)) 
+ENGINE=InnoDB 
+AUTO_INCREMENT=3 
+DEFAULT CHARSET=utf8mb4 
+COLLATE=utf8mb4_0900_ai_ci;

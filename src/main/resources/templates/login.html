@@ -1,4 +1,6 @@
-<html lang="en" xmlns:theadh="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:theadh="http://www.thymeleaf.org"
+xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
 	<meta charset="UTF-8">
@@ -18,12 +20,18 @@
 		</div>
 	</nav>
 	<div class="container text-center">
+		<div th:if="${param.error}">
+			Invalid username and password.
+		</div>
+		<div th:if="${param.logout}">
+			You have been logged out.
+		</div>
 		<div class="row">
 			<div class="col">
 				<h1 class="mt-5">Login</h1>
 				<img src="" alt="login icon" />
 				<form th:action="@{/employee}" th:object="${employee}" method="post">
-					<input type="text" id="user" class="form-control col-xs-3" placeholder="Username" required>
+					<input type="text" id="email" class="form-control" placeholder="email" required>
 					<input type="passwod" id="password" class="form-control" placeholder="*********" required>
 					<button type="submit" class="btn btn-primary mt-4 me-3">Enter</button>
 				</form>
