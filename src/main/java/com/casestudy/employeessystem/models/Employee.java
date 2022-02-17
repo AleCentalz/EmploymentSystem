@@ -6,23 +6,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "Employee")
 public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int uid;
-	@Column(name = "first_name", nullable = false, length = 45)
+	@Column(name = "firstname", nullable = false, length = 45) //name always in lower case!!!
 	private String firstName;
-	@Column(name = "middle_name", nullable = true, length = 45)
+	@Column(name = "middlename", nullable = true, length = 45)
 	private String middleName;
-	@Column(name = "last_name", nullable = false, length = 45)
+	@Column(name = "lastname", nullable = false, length = 45)
 	private String lastName;
 	@Column(name = "position", nullable = false, length = 45)
 	private String position;
-	@Column(name = "birth_date", nullable = false, length = 45)
+	@Column(name = "birthdate", nullable = false, length = 45)
 	private String birthDate;
 
 

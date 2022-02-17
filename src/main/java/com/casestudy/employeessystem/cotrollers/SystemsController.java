@@ -24,17 +24,13 @@ public class SystemsController {
 	@Autowired
 	private EmployeeService service;
 
-	@GetMapping({ "/" }) // login page
-	public String login() {
-		return "login";
-	}
-
-	@GetMapping("/login") // registration page
+	// ________register form______________
+	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
 	}
-
+	// ________make the registration___________
 	@PostMapping("/process_register")
 	public String processRegistration(User user) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -45,8 +41,9 @@ public class SystemsController {
 
 		return "sucessful_registration";
 	}
-
-	@GetMapping("/welcome") // home page
+	
+	// ________welcome page______________
+	@GetMapping({"/welcome","/"}) 
 	public String welcome() {
 		return "welcome";
 	}
@@ -60,7 +57,7 @@ public class SystemsController {
 		return "add_employee";
 	}
 
-	// save the employee
+	//________save the employee________________
 	@PostMapping("/employee")
 	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl) { // send the employee object
 		service.saveEmployees(empl);
@@ -73,11 +70,15 @@ public class SystemsController {
 		return "search";
 	}
 
-	// @PostMapping("/search/{firstName}")
 	// _______view all the employees________
 	@GetMapping("/list")
 	public String listEmployees(Model model) {
-		model.addAttribute("employees", service.listAllEmployees()); // employee's list
+		try {
+			model.addAttribute("employees", service.listAllEmployees()); // employee's list
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
+		
 		return "employees";
 	}
 
