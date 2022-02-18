@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.models.User;
@@ -23,7 +24,13 @@ public class SystemsController {
 
 	@Autowired
 	private EmployeeService service;
-
+	
+	//________index page______________
+	@GetMapping("/")
+	public String index() {
+		return "index";
+	}
+	
 	// ________register form______________
 	@GetMapping("/register")
 	public String register(Model model) {
@@ -43,7 +50,7 @@ public class SystemsController {
 	}
 	
 	// ________welcome page______________
-	@GetMapping({"/welcome","/"}) 
+	@GetMapping("/welcome") 
 	public String welcome() {
 		return "welcome";
 	}
@@ -101,7 +108,7 @@ public class SystemsController {
 		existingEmpl.setBirthDate(employee.getBirthDate());
 
 		service.updateEmployee(existingEmpl);
-		return "redirect:/login";
+		return "redirect:/";
 	}
 
 }
