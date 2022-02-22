@@ -15,6 +15,9 @@
 			<a class="navbar-brand" href="/welcome">
 				Employment System
 			</a>
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" />
+			</form>
 		</div>
 	</nav>
 
@@ -28,7 +31,7 @@
 				<form th:action="@{/employee/{uid}(uid=${employee.uid})}" th:object="${employee}" method="POST">
 					<label for="uid" class="col-form-label">UID</label>
 					<input type="text" id="uid" class="form-control" th:field="*{uid}" readonly>
-						
+
 					<label for="first-name" class="col-form-label">First name</label>
 					<input type="text" id="first-name" class="form-control" th:field="*{firstName}"
 						placeholder="Employee's first Name" required>
@@ -49,7 +52,7 @@
 					<input type="date" id="birth-date" class="form-control" th:field="*{birthDate}" required>
 
 					<button type="submit" class="btn btn-primary mt-4 me-3">Save</button>
-					<a class="btn btn-secondary mt-4" role="button" href="/">Cancel</a>
+					<a class="btn btn-secondary mt-4" role="button" href="/welcome">Cancel</a>
 				</form>
 			</div>
 		</div>

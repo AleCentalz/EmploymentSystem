@@ -1,12 +1,15 @@
 package com.casestudy.employeessystem.models;
 
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
 
 
 @Entity
@@ -25,7 +28,7 @@ public class Employee {
 	@Column(name = "position", nullable = false, length = 45)
 	private String position;
 	@Column(name = "birthdate", nullable = false, length = 45)
-	private String birthDate;
+	private java.sql.Date birthDate;
 
 
 	public int getUid() {
@@ -68,11 +71,11 @@ public class Employee {
 		this.position = position;
 	}
 
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 

@@ -33,10 +33,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public Employee getEmployeeById(int uid) {
 		return repo.getById(uid);
 	}
-	
+
 	@Override
 	public List<Employee> findEmployee(String fisrtName, String lastName, String position) {
 		return repo.findByFirstNameOrLastNameOrPosition(fisrtName, lastName, position);
 	}
+	
+	/*
+	 * @Override public List<Employee> findEmployee(String fisrtName, String
+	 * lastName, String position) { return
+	 * repo.findByFirstNameOrLastNameOrPosition(fisrtName, lastName, position); }
+	 */
 
 }

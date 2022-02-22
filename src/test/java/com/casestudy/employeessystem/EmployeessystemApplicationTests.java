@@ -1,8 +1,13 @@
 package com.casestudy.employeessystem;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,14 +27,15 @@ class EmployeessystemApplicationTests {
 	public void contextLoads() {
 		IEmployeeRepository repo = context.getBean(IEmployeeRepository.class);
 		
-		Employee employee = new Employee();
+		  
+		//Employee employee = new Employee();
 		//employee.setUid(1); //this should do it the DB 
-		employee.setFirstName("Raul");
+		//employee.setFirstName("Raul");
 		//employee.setMiddleName("Manuel");
-		employee.setLastName("Mancilla");
-		employee.setBirthDate("17/02/87");
-		employee.setPosition("Employee");
-		repo.save(employee); //* CREATE *
+		//employee.setLastName("Mancilla");
+		//employee.setBirthDate(Date.parse("17/02/1987")); //this has to be a datetime type
+		//employee.setPosition("Employee");
+		//repo.save(employee); //* CREATE *
 		
 		// * READ *
 		// I should read by first name, last name or position ... or a combination of them
@@ -47,6 +53,7 @@ class EmployeessystemApplicationTests {
 		
 		// * READ ALL *
 		repo.findAll().forEach(p->{System.out.println(p.getFirstName());}); //lamda expression
+		//repo.findByFirstNameOrLastNameOrPosition("", "", "Employee");
 		
 		// * DELETE * this will delete the user #3 
 		//if(result.isPresent()) {

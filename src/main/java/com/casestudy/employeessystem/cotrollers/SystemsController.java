@@ -1,16 +1,23 @@
 package com.casestudy.employeessystem.cotrollers;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.models.User;
@@ -24,22 +31,23 @@ public class SystemsController {
 
 	@Autowired
 	private EmployeeService service;
-	
-	//________index page______________
+
+	// ________index page______________
 	@GetMapping("/")
 	public String index() {
 		return "index";
 	}
-	
+
 	// ________register form______________
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
 	}
+
 	// ________make the registration___________
 	@PostMapping("/process_register")
-	public String processRegistration(User user) {
+	public String processRegistration(@Valid User user) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
@@ -48,9 +56,9 @@ public class SystemsController {
 
 		return "sucessful_registration";
 	}
-	
+
 	// ________welcome page______________
-	@GetMapping("/welcome") 
+	@GetMapping("/welcome")
 	public String welcome() {
 		return "welcome";
 	}
@@ -64,16 +72,28 @@ public class SystemsController {
 		return "add_employee";
 	}
 
-	//________save the employee________________
+	// ________save the employee________________
 	@PostMapping("/employee")
 	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl) { // send the employee object
 		service.saveEmployees(empl);
-		return "redirect:/";
+		return "redirect:/welcome";
 	}
 
+	// _______search form________________________
+	@GetMapping("/search/form")
+	public String searchForm() {
+		return "search";
+	}
 	// _______search the employee___________
-	@GetMapping("/search")
-	public String searchEmpl() {
+	@RequestMapping("/search")
+	public String searchEmpl(Model model, String fname, String lname, String pos) {
+		try {
+			List<Employee> list = service.findEmployee(fname, lname, pos);
+			model.addAttribute("list", list);
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 		return "search";
 	}
 
@@ -82,10 +102,10 @@ public class SystemsController {
 	public String listEmployees(Model model) {
 		try {
 			model.addAttribute("employees", service.listAllEmployees()); // employee's list
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		
+
 		return "employees";
 	}
 
@@ -108,7 +128,13 @@ public class SystemsController {
 		existingEmpl.setBirthDate(employee.getBirthDate());
 
 		service.updateEmployee(existingEmpl);
-		return "redirect:/";
+		return "redirect:/welcome";
+	}
+
+	// DB error
+	@ExceptionHandler({ SQLException.class, DataAccessException.class })
+	public String databaseError() {
+		return "error";
 	}
 
 }
