@@ -26,11 +26,11 @@
 			<div class="col-10">
 				<form th:action="@{/search}" class="d-flex" method="GET">
 					<input class="form-control me-3" type="search" placeholder="First name" aria-label="firstName"
-						th:value="${fname}" name="fname">
+						th:value="${firstName}" name="fname">
 					<input class="form-control me-3" type="search" placeholder="Last name" aria-label="lastName"
-						th:value="${lname}" name="lname">
+						th:value="${lastName}" name="lname">
 					<input class="form-control me-3" type="search" placeholder="Position" aria-label="position"
-						th:value="${pos}" name="pos">
+						th:value="${position}" name="pos">
 					<button class="btn btn-success me-3" type="submit">Search</button>
 					<button class="btn btn-secondary me-3" type="clear">Clean</button>
 				</form>

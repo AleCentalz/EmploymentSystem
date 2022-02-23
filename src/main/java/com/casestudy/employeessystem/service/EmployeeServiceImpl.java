@@ -35,14 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public List<Employee> findEmployee(String fisrtName, String lastName, String position) {
-		return repo.findByFirstNameOrLastNameOrPosition(fisrtName, lastName, position);
+	public List<Employee> findEmployee(String fname, String lname, String pos) {
+		return repo.findEmployee(fname, lname, pos);
 	}
-	
-	/*
-	 * @Override public List<Employee> findEmployee(String fisrtName, String
-	 * lastName, String position) { return
-	 * repo.findByFirstNameOrLastNameOrPosition(fisrtName, lastName, position); }
-	 */
 
 }
