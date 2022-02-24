@@ -20,9 +20,10 @@
 			</form>
 		</div>
 	</nav>
-
 	<div class="container">
 		<h3 class="my-3">Add a new Employee to the System</h3>
+		<div th:class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+		<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 		<div class="row">
 			<div class="col-2">
 				<img src="/img/profile-pic.jpg" alt="Employee's photo" />

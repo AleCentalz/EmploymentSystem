@@ -26,7 +26,7 @@ public class Employee {
 	@Column(name = "position", nullable = false, length = 45)
 	private String position;
 	@Column(name = "birthdate", nullable = false, length = 45)
-	private java.sql.Date birthDate;
+	private Date birthDate;
 
 
 	public int getUid() {

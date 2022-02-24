@@ -19,8 +19,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 	@Query(value = "SELECT * FROM Employee "
 			+ "WHERE ( firstName = :firstName OR :firstName = '' ) "
 			+ "AND ( lastName = :lastName OR :lastName = '' ) "
-			+ "AND ( position = :position OR :position = '' ) "
-			+ "AND ", nativeQuery = true)
+			+ "AND ( position = :position OR :position = '' ) ", nativeQuery = true)
 	List<Employee> findEmployee(@Param("firstName") String fname, @Param("lastName") String lname, @Param("position") String pos);
+	
 	
 }

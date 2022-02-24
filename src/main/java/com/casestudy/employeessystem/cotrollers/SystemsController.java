@@ -1,10 +1,14 @@
 package com.casestudy.employeessystem.cotrollers;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.models.User;
@@ -74,9 +79,23 @@ public class SystemsController {
 
 	// ________save the employee________________
 	@PostMapping("/employee")
-	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl) { // send the employee object
-		service.saveEmployees(empl);
-		return "redirect:/welcome";
+	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl, RedirectAttributes redirAttrs) { // send the employee object
+		// get the birth date of the employee and convert it to java.util.date
+		Date birthDate = empl.getBirthDate();
+		java.util.Date birthDateUtilDate = new java.util.Date(birthDate.getTime());
+		// get actual date
+		LocalDateTime dateTime = LocalDateTime.now();
+		// obtain minimum date
+		LocalDateTime oldDate = dateTime.minusYears(21);
+		java.util.Date c2 = oldDate.toDateTime().toDate();
+		if(birthDateUtilDate.before(c2)) {
+			service.saveEmployees(empl);
+			redirAttrs.addFlashAttribute("success","Employee added to the system correctly.");
+			return "add_employee";
+		}else {
+			redirAttrs.addFlashAttribute("error","Introduce a correct date birth, plea se.");
+			return "add_employee";
+		}
 	}
 
 	// _______search form________________________
@@ -84,6 +103,7 @@ public class SystemsController {
 	public String searchForm() {
 		return "search";
 	}
+
 	// _______search the employee___________
 	@RequestMapping("/search")
 	public String searchEmpl(Model model, String fname, String lname, String pos) {
