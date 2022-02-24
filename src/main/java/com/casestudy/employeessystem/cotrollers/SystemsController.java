@@ -89,11 +89,20 @@ public class SystemsController {
 		LocalDateTime oldDate = dateTime.minusYears(21);
 		java.util.Date c2 = oldDate.toDateTime().toDate();
 		if(birthDateUtilDate.before(c2)) {
-			service.saveEmployees(empl);
-			redirAttrs.addFlashAttribute("success","Employee added to the system correctly.");
-			return "add_employee";
+			if(service.exists(empl)!=true) {
+				service.saveEmployees(empl);
+				//redirAttrs.addFlashAttribute("success","Employee added to the system correctly.");
+				System.out.println("Employee added to the system correctly");
+				return "redirect:/welcome";
+			}else {
+				//redirAttrs.addFlashAttribute("error","That employee already exists.");
+				System.out.println("That employee already exists.");
+				return "add_employee";
+			}
+			
 		}else {
-			redirAttrs.addFlashAttribute("error","Introduce a correct date birth, plea se.");
+			//redirAttrs.addFlashAttribute("error","Introduce a correct date birth, please.");
+			System.out.println("Introduce a correct date birth, please.");
 			return "add_employee";
 		}
 	}

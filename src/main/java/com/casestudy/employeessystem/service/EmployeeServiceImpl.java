@@ -42,4 +42,26 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return repo.findEmployee(fname, lname, pos);
 	}
 
+	@Override
+	public Boolean exists(Employee empl) {
+		//get new employee data
+		String fname = empl.getFirstName();
+		System.out.println(fname);
+		String mname = empl.getMiddleName();
+		System.out.println(mname);
+		String lname = empl.getLastName();
+		System.out.println(lname);
+		Date bday = empl.getBirthDate();
+		System.out.println(bday);
+		
+		Employee existedEmployee = (Employee) repo.findEmployeeByFirstNameAndMiddleNameAndLastNameAndBirthDate(fname, mname, lname, bday);
+		
+		if(existedEmployee != null) {
+			System.out.println("ERROR, EMPLOYEE ALREADY EXISTS");
+			return true;
+		}
+		else
+			return false;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.casestudy.employeessystem.repositories;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +23,5 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 			+ "AND ( position = :position OR :position = '' ) ", nativeQuery = true)
 	List<Employee> findEmployee(@Param("firstName") String fname, @Param("lastName") String lname, @Param("position") String pos);
 	
-	
+	Employee findEmployeeByFirstNameAndMiddleNameAndLastNameAndBirthDate(String firstName, String middleName, String lastName, Date birthDate);
 }
