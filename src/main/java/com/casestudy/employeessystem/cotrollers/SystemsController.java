@@ -31,25 +31,26 @@ import com.casestudy.employeessystem.service.EmployeeService;
 
 @Controller
 public class SystemsController {
+	
 	@Autowired
 	private IUserRepository userRepo;
-
 	@Autowired
 	private EmployeeService service;
 
+	
 	// ________index page______________
 	@GetMapping("/")
 	public String index() {
 		return "index";
 	}
 
+	
 	// ________register form______________
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
 	}
-
 	// ________make the registration___________
 	@PostMapping("/process_register")
 	public String processRegistration(@Valid User user) {
@@ -62,21 +63,21 @@ public class SystemsController {
 		return "sucessful_registration";
 	}
 
+	
 	// ________welcome page______________
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "welcome";
 	}
 
-	// ________add an employee_______________
-	// show the form
+	
+	// ________add an employee form_____________
 	@GetMapping("/employee/add")
 	public String addEmplForm(Model model) {
 		Employee empl = new Employee();
 		model.addAttribute(empl);
 		return "add_employee";
 	}
-
 	// ________save the employee________________
 	@PostMapping("/employee")
 	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl, RedirectAttributes redirAttrs) { // send the employee object
@@ -107,12 +108,12 @@ public class SystemsController {
 		}
 	}
 
+	
 	// _______search form________________________
 	@GetMapping("/search/form")
 	public String searchForm() {
 		return "search";
 	}
-
 	// _______search the employee___________
 	@RequestMapping("/search")
 	public String searchEmpl(Model model, String fname, String lname, String pos) {
@@ -126,25 +127,23 @@ public class SystemsController {
 		return "search";
 	}
 
-	// _______view all the employees________
-	@GetMapping("/list")
-	public String listEmployees(Model model) {
-		try {
-			model.addAttribute("employees", service.listAllEmployees()); // employee's list
-		} catch (Exception ex) {
-			System.out.println(ex);
-		}
-
-		return "employees";
-	}
-
+	/*
+	 * // _______view all the employees________
+	 * 
+	 * @GetMapping("/list") public String listEmployees(Model model) { try {
+	 * model.addAttribute("employees", service.listAllEmployees()); // employee's
+	 * list } catch (Exception ex) { System.out.println(ex); }
+	 * 
+	 * return "employees"; }
+	 */
+	
+	
 	// _______edit employee______________
 	@GetMapping("/employee/edit/{uid}")
 	public String editEmployeeForm(@PathVariable int uid, Model model) { // receive the uid to get its info
 		model.addAttribute("employee", service.getEmployeeById(uid));
 		return "edit_employee";
 	}
-
 	// _______update info employee________
 	@PostMapping("/employee/{uid}")
 	public String updateEmployee(@PathVariable int uid, @ModelAttribute("employee") Employee employee, Model model) {
@@ -159,6 +158,17 @@ public class SystemsController {
 		service.updateEmployee(existingEmpl);
 		return "redirect:/welcome";
 	}
+	
+	
+	
+	//________view employee's compensation history_______
+	@GetMapping("/employee/view_compensation/{uid}")
+	public String viewCompensation(@PathVariable int uid, Model model) {
+		model.addAttribute("employee", service.getEmployeeById(uid));
+		return "compensation_history";
+	}
+	
+	
 
 	// DB error
 	@ExceptionHandler({ SQLException.class, DataAccessException.class })

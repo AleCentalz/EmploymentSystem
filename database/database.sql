@@ -27,14 +27,30 @@ USE `employees_system` ;
 DROP TABLE IF EXISTS `employees_system`.`Compensation` ;
 
 CREATE TABLE IF NOT EXISTS `employees_system`.`Compensation` (
-  `type` INT NOT NULL,
-  `amount` INT NOT NULL,
-  `description` VARCHAR(45) NULL DEFAULT NULL,
-  `date` DATETIME NOT NULL)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+  `id` int NOT NULL,
+  `type` int NOT NULL,
+  `amount` int NOT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `date` datetime NOT NULL,
+  `idEmployee` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_idx` (`type`),
+  KEY `idEmployee_idx` (`idEmployee`),
+  CONSTRAINT `idEmployee` FOREIGN KEY (`idEmployee`) REFERENCES `Employee` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `type` FOREIGN KEY (`type`) REFERENCES `Type` (`idType`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `Compensation`
+--
+
+LOCK TABLES `Compensation` WRITE;
+/*!40000 ALTER TABLE `Compensation` DISABLE KEYS */;
+INSERT INTO `Compensation` VALUES (1,1,30000,'salary','2019-05-10 00:00:00',1);
+/*!40000 ALTER TABLE `Compensation` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 -- -----------------------------------------------------
 -- Table `employees_system`.`Employee`
@@ -42,17 +58,29 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `employees_system`.`Employee` ;
 
 CREATE TABLE IF NOT EXISTS `employees_system`.`Employee` (
-  `uid` INT NOT NULL AUTO_INCREMENT,
-  `firstName` VARCHAR(45) NOT NULL,
-  `middleName` VARCHAR(45) NULL DEFAULT NULL,
-  `lastName` VARCHAR(45) NOT NULL,
-  `position` VARCHAR(45) NOT NULL,
-  `birthDate` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`uid`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+  `uid` int NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(45) NOT NULL,
+  `middleName` varchar(45) DEFAULT NULL,
+  `lastName` varchar(45) NOT NULL,
+  `position` varchar(45) NOT NULL,
+  `birthDate` date NOT NULL,
+  `idCompensation` int DEFAULT NULL,
+  PRIMARY KEY (`uid`),
+  KEY `idCompensation_idx` (`idCompensation`),
+  CONSTRAINT `idCompensation` FOREIGN KEY (`idCompensation`) REFERENCES `Compensation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Employee`
+--
+
+LOCK TABLES `Employee` WRITE;
+/*!40000 ALTER TABLE `Employee` DISABLE KEYS */;
+INSERT INTO `Employee` VALUES (1,'Ale','','Centeno','Student','1999-06-10',1),(2,'Jose','','Perez','Employee','1995-06-04',NULL),(3,'Manuel','','Mora','Employee','1984-07-06',NULL),(4,'Sandra','','Gomez','Employee','1998-02-17',NULL);
+/*!40000 ALTER TABLE `Employee` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 
 -- -----------------------------------------------------
@@ -61,18 +89,22 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `employees_system`.`Type` ;
 
 CREATE TABLE IF NOT EXISTS `employees_system`.`Type` (
-  `idType` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idType`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+ `idType` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`idType`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `Type`
+--
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
+LOCK TABLES `Type` WRITE;
+/*!40000 ALTER TABLE `Type` DISABLE KEYS */;
+INSERT INTO `Type` VALUES (1,'Salary'),(2,'Bonus'),(3,'Commision'),(4,'Allowance'),(5,'Adjustment');
+/*!40000 ALTER TABLE `Type` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 -- -----------------------------------------------------
 -- Table `employees_system`.`User`
@@ -83,8 +115,19 @@ CREATE TABLE `User` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(45) NOT NULL,
   `password` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)) 
-ENGINE=InnoDB 
-AUTO_INCREMENT=3 
-DEFAULT CHARSET=utf8mb4 
-COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `User`
+--
+
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,'rramirez@ibm.com','$2a$10$u0H7WV6sNEFSg1TCCEUoQ./P1h./vvYdRDfyF66HrCjflinRSw9DO',''),(17,'alecenteno@ibm.com','$2a$10$cCMBoWCzHe2eeaLs7Trz8eFAdwc3K6uG77jx2xnoQCun7eQDW4QA6','Ale');
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

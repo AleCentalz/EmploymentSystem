@@ -16,7 +16,7 @@
 				Employment System
 			</a>
 			<form th:action="@{/logout}" method="post">
-				<input type="submit" value="Sign Out" />
+				<input class="btn btn-secondary btn-sm" type="submit" value="Sign Out" />
 			</form>
 		</div>
 	</nav>
@@ -43,7 +43,10 @@
 							<td th:text="${employee.lastName}"></td>
 							<td th:text="${employee.position}"></td>
 							<td>
-								<a th:href="@{/employee/edit/{uid}(uid=${employee.uid})}" class="btn btn-info">Edit</a>
+								<a th:href="@{/employee/edit/{uid}(uid=${employee.uid})}" class="btn btn-outline-primary btn-sm">Edit</a>
+							</td>
+							<td>
+								<a th:href="@{/employee/view_compensation/{uid}(uid=${employee.uid})}" class="btn btn-primary btn-sm">Compensations</a>
 							</td>
 						</tr>
 					</tbody>
