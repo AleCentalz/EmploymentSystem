@@ -21,24 +21,24 @@ DROP SCHEMA IF EXISTS `employees_system` ;
 CREATE SCHEMA IF NOT EXISTS `employees_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `employees_system` ;
 
--- -----------------------------------------------------
--- Table `employees_system`.`Compensation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `employees_system`.`Compensation` ;
+--
+-- Table structure for table `Compensation`
+--
 
-CREATE TABLE IF NOT EXISTS `employees_system`.`Compensation` (
-  `id` int NOT NULL,
-  `type` int NOT NULL,
-  `amount` int NOT NULL,
+DROP TABLE IF EXISTS `Compensation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Compensation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(15) NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `date` date NOT NULL,
   `description` varchar(45) DEFAULT NULL,
-  `date` datetime NOT NULL,
-  `idEmployee` int DEFAULT NULL,
+  `idEmployee` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `type_idx` (`type`),
   KEY `idEmployee_idx` (`idEmployee`),
-  CONSTRAINT `idEmployee` FOREIGN KEY (`idEmployee`) REFERENCES `Employee` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `type` FOREIGN KEY (`type`) REFERENCES `Type` (`idType`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `idEmployee` FOREIGN KEY (`idEmployee`) REFERENCES `Employee` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `employees_system`.`Compensation` (
 
 LOCK TABLES `Compensation` WRITE;
 /*!40000 ALTER TABLE `Compensation` DISABLE KEYS */;
-INSERT INTO `Compensation` VALUES (1,1,30000,'salary','2019-05-10 00:00:00',1);
+INSERT INTO `Compensation` VALUES (1,'Salary',10000,'2019-10-05',NULL,1),(2,'Bonus',5000,'2019-10-10','For a great job',1);
 /*!40000 ALTER TABLE `Compensation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -79,30 +79,6 @@ LOCK TABLES `Employee` WRITE;
 /*!40000 ALTER TABLE `Employee` DISABLE KEYS */;
 INSERT INTO `Employee` VALUES (1,'Ale','','Centeno','Student','1999-06-10',1),(2,'Jose','','Perez','Employee','1995-06-04',NULL),(3,'Manuel','','Mora','Employee','1984-07-06',NULL),(4,'Sandra','','Gomez','Employee','1998-02-17',NULL);
 /*!40000 ALTER TABLE `Employee` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-
--- -----------------------------------------------------
--- Table `employees_system`.`Type`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `employees_system`.`Type` ;
-
-CREATE TABLE IF NOT EXISTS `employees_system`.`Type` (
- `idType` int NOT NULL,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`idType`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Type`
---
-
-LOCK TABLES `Type` WRITE;
-/*!40000 ALTER TABLE `Type` DISABLE KEYS */;
-INSERT INTO `Type` VALUES (1,'Salary'),(2,'Bonus'),(3,'Commision'),(4,'Allowance'),(5,'Adjustment');
-/*!40000 ALTER TABLE `Type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
