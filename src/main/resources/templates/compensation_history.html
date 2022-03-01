@@ -41,7 +41,7 @@
 
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/search_dates}" class="d-flex" method="GET">
+				<form th:action="@{/search}" class="d-flex" method="GET">
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="inputGroup-sizing-sm">Start date</span>
@@ -60,7 +60,7 @@
 				</form>
 			</div>
 			<div class="col">
-				<a href="" class="btn btn-primary" role="button">Add a new compensation</a>
+				<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="btn btn-primary" role="button">Add a new compensation</a>
 			</div>
 		</div>
 

@@ -23,8 +23,12 @@
 		</div>
 	</nav>
 	<div class="container text-center">
+		<div th:if="${param.success}">
+			<div class="alert alert-primary">The employee was succesfully added.</div>
+		</div>
 		<div class="cenefa">
-			<h1 class="mt-5">Welcome <span th:text="${#request.userPrincipal.principal.name}"></span> to the Employee's System</h1>
+			<h1 class="mt-5">Welcome <span th:text="${#request.userPrincipal.principal.name}"></span> to the Employee's
+				System</h1>
 		</div>
 		<p class="fw-light mb-5">Please, select one option</p>
 		<div class="my-4">

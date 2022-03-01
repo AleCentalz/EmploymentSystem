@@ -43,10 +43,10 @@
 							<td th:text="${employee.lastName}"></td>
 							<td th:text="${employee.position}"></td>
 							<td>
-								<a th:href="@{/employee/edit/{uid}(uid=${employee.uid})}" class="btn btn-outline-primary btn-sm">Edit</a>
+								<a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}" class="btn btn-outline-primary btn-sm">Edit</a>
 							</td>
 							<td>
-								<a th:href="@{/employee/view_compensation/{uid}(uid=${employee.uid})}" class="btn btn-primary btn-sm">Compensations</a>
+								<a th:href="@{/employee/{uid}/view_compensation(uid=${employee.uid})}" class="btn btn-primary btn-sm">Compensations</a>
 							</td>
 						</tr>
 					</tbody>

@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.casestudy.employeessystem.models.Compensation;
 import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.models.User;
 import com.casestudy.employeessystem.repositories.IUserRepository;
-import com.casestudy.employeessystem.service.EmployeeService;
+import com.casestudy.employeessystem.service.CompensationService;
+import com.casestudy.employeessystem.service.EmployeeServiceImpl;
 
 @Controller
 public class SystemsController {
@@ -35,7 +37,9 @@ public class SystemsController {
 	@Autowired
 	private IUserRepository userRepo;
 	@Autowired
-	private EmployeeService service;
+	private CompensationService compService;
+	@Autowired
+	private EmployeeServiceImpl emplService;
 
 	
 	// ________index page______________
@@ -90,21 +94,16 @@ public class SystemsController {
 		LocalDateTime oldDate = dateTime.minusYears(21);
 		java.util.Date c2 = oldDate.toDateTime().toDate();
 		if(birthDateUtilDate.before(c2)) {
-			if(service.exists(empl)!=true) {
-				service.saveEmployees(empl);
-				//redirAttrs.addFlashAttribute("success","Employee added to the system correctly.");
-				System.out.println("Employee added to the system correctly");
-				return "redirect:/welcome";
-			}else {
-				//redirAttrs.addFlashAttribute("error","That employee already exists.");
-				System.out.println("That employee already exists.");
-				return "add_employee";
+			if(emplService.exists(empl)!=true) { //successfully added
+				emplService.saveEmployees(empl);
+				return "redirect:/welcome?success";
+			}else { //error, employee already exists
+				return "redirect:/add_employee?error";
 			}
 			
 		}else {
-			//redirAttrs.addFlashAttribute("error","Introduce a correct date birth, please.");
-			System.out.println("Introduce a correct date birth, please.");
-			return "add_employee";
+			//wrong date
+			return "redirect:/add_employee?error";
 		}
 	}
 
@@ -118,7 +117,7 @@ public class SystemsController {
 	@RequestMapping("/search")
 	public String searchEmpl(Model model, String fname, String lname, String pos) {
 		try {
-			List<Employee> list = service.findEmployee(fname, lname, pos);
+			List<Employee> list = emplService.findEmployee(fname, lname, pos);
 			model.addAttribute("list", list);
 
 		} catch (Exception ex) {
@@ -137,17 +136,16 @@ public class SystemsController {
 	 * return "employees"; }
 	 */
 	
-	
 	// _______edit employee______________
-	@GetMapping("/employee/edit/{uid}")
+	@GetMapping("/employee/{uid}/edit")
 	public String editEmployeeForm(@PathVariable int uid, Model model) { // receive the uid to get its info
-		model.addAttribute("employee", service.getEmployeeById(uid));
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		return "edit_employee";
 	}
 	// _______update info employee________
 	@PostMapping("/employee/{uid}")
 	public String updateEmployee(@PathVariable int uid, @ModelAttribute("employee") Employee employee, Model model) {
-		Employee existingEmpl = service.getEmployeeById(uid);
+		Employee existingEmpl = emplService.getEmployeeById(uid);
 		existingEmpl.setUid(employee.getUid());
 		existingEmpl.setFirstName(employee.getFirstName()); // from the employee in the form, assign the data
 		existingEmpl.setLastName(employee.getLastName());
@@ -155,20 +153,32 @@ public class SystemsController {
 		existingEmpl.setPosition(employee.getPosition());
 		existingEmpl.setBirthDate(employee.getBirthDate());
 
-		service.updateEmployee(existingEmpl);
+		emplService.updateEmployee(existingEmpl);
 		return "redirect:/welcome";
 	}
 	
 	
 	
 	//________view employee's compensation history_______
-	@GetMapping("/employee/view_compensation/{uid}")
+	@GetMapping("/employee/{uid}/view_compensation")
 	public String viewCompensation(@PathVariable int uid, Model model) {
-		model.addAttribute("employee", service.getEmployeeById(uid));
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		return "compensation_history";
 	}
-	
-	
+	//________new compensation form_________________
+	@GetMapping("/employee/{uid}/new_compensation")
+	public String compensationForm(@PathVariable int uid, Model model) {
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		return "add_compensation";  
+			
+	}
+	//________add a new compensation__________________
+	@PostMapping("/employee/{uid}/add_compensation")
+	public String addCompensation(@ModelAttribute("compensations") @Valid Compensation comp) {
+		
+		return "add_compensation";  
+			
+	}
 
 	// DB error
 	@ExceptionHandler({ SQLException.class, DataAccessException.class })

@@ -51,8 +51,8 @@
 					<label for="birh-date" class="col-form-label">Birth date</label>
 					<input type="date" id="birth-date" class="form-control" th:field="*{birthDate}" required>
 
-					<button type="submit" class="btn btn-primary mt-4 me-3">Save</button>
-					<a class="btn btn-secondary mt-4" role="button" href="/search">Cancel</a>
+					<button type="submit" class="btn btn-primary">Save</button>
+					<a class="btn btn-secondary" role="button" th:href="@{/employee/{uid}/view_compensation(uid=${employee.uid})}">Cancel</a>
 				</form>
 			</div>
 		</div>
