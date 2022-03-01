@@ -22,13 +22,12 @@
 	</nav>
 	<div class="container">
 		<h3 class="my-3">Add a new Employee to the System</h3>
-		<div th:if="${param.error}">
-			<div class="alert alert-danger">There was an error.</div>
-		</div>
+
 		<div class="row">
 			<div class="col-2">
 				<img src="/img/profile-pic.jpg" alt="Employee's photo" />
 			</div>
+
 			<div class="col">
 				<form th:action="@{/employee}" th:object="${employee}" method="post">
 					<div class="form-row">
@@ -61,12 +60,14 @@
 					</div>
 					<button type="submit" class="btn btn-primary mt-4 col-md-2">Add Employee</button>
 					<a class="btn btn-secondary mt-4 col-md-2" role="button" href="/welcome">Cancel</a>
+				</form>
 			</div>
-			</form>
+
 		</div>
-	</div>
+
 	</div>
 
+	</div>
 </body>
 
 </html>

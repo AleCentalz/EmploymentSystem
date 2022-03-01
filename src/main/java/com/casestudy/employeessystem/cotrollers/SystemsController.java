@@ -93,18 +93,15 @@ public class SystemsController {
 		// obtain minimum date
 		LocalDateTime oldDate = dateTime.minusYears(21);
 		java.util.Date c2 = oldDate.toDateTime().toDate();
+		
 		if(birthDateUtilDate.before(c2)) {
 			if(emplService.exists(empl)!=true) { //successfully added
 				emplService.saveEmployees(empl);
 				return "redirect:/welcome?success";
-			}else { //error, employee already exists
-				return "redirect:/add_employee?error";
-			}
-			
-		}else {
-			//wrong date
-			return "redirect:/add_employee?error";
-		}
+			}else //error, employee already exists
+				return "redirect:/welcome?duplicate";
+		}else //wrong date
+			return "redirect:/welcome?invalid";
 	}
 
 	
@@ -163,6 +160,8 @@ public class SystemsController {
 	@GetMapping("/employee/{uid}/view_compensation")
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); //obtain month and amount of each compensation
+		model.addAttribute("listComp", compensations);
 		return "compensation_history";
 	}
 	//________new compensation form_________________
@@ -175,7 +174,6 @@ public class SystemsController {
 	//________add a new compensation__________________
 	@PostMapping("/employee/{uid}/add_compensation")
 	public String addCompensation(@ModelAttribute("compensations") @Valid Compensation comp) {
-		
 		return "add_compensation";  
 			
 	}

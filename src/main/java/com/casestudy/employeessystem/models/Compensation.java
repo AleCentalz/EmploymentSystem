@@ -20,7 +20,7 @@ public class Compensation {
     @Column(name = "id")
 	private int id;
 	@Column(name = "type", nullable = false)
-	private int type;
+	private String type;
 	@Column(name = "amount", nullable = false)
 	private int amount;
 	@Column(name = "description", nullable = true)
@@ -28,15 +28,17 @@ public class Compensation {
 	@Column(name = "date", nullable = false)
 	private Date date; 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "idEmployee", nullable=false)
+	@JoinColumn(name = "idemployee", nullable=false)
 	private Employee idEmployee;
+	@Column(name = "monthname", nullable = true)
+	private String monthname;
 	
 	// constructors
 	public Compensation() {
 		
 	}
 	
-	public Compensation(int id, int type, int amount, String description, Date date, Employee idEmployee) {
+	public Compensation(int id, String type, int amount, String description, Date date, Employee idEmployee) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -53,10 +55,10 @@ public class Compensation {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	public int getAmount() {
@@ -84,6 +86,14 @@ public class Compensation {
 		this.idEmployee = idEmployee;
 	}
 	
+	public String getMonthname() {
+		return monthname;
+	}
+
+	public void setMonthname(String monthname) {
+		this.monthname = monthname;
+	}
+
 	@Override
 	public String toString() {
 		return "Compensation [id=" + id + ", type=" + type + ", amount=" + amount + ", description=" + description

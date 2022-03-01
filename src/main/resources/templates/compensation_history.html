@@ -80,10 +80,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr th:each="compensation : ${listComp}">
 						<th scope="row">2019</th>
-						<td><a href=""></a></td>
-						<td></td>
+						<td><a th:text="${compensation.monthname}" href=""></a></td>
+						<td th:text="'$' + ${compensation.amount}"></td>
 					</tr>
 					<tr class="table-dark">
 						<th scope="row">Total</th>

@@ -26,6 +26,8 @@ public class CompensationService {
 		return repo.getById(id);
 	}
 	
-	
+	public List<Compensation> findCompensationsByEmployeeId(int idEmployee){
+		return repo.findCompensationsByEmployeeId(idEmployee);
+	}
 	
 }
