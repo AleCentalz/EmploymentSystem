@@ -14,8 +14,11 @@ public interface ICompensationRepository extends JpaRepository<Compensation, Int
 	//List<Compensation> findCompensationByDate(Date date);
 	
 	//find compensations by employee id to show in the history
-	@Query(value="SELECT id, type, description, idEmployee, amount, date, MONTHNAME(date) as monthname FROM Compensation c "
-			+ "WHERE c.idEmployee = :idEmployee ", nativeQuery = true)
+	@Query(value="SELECT id, type, description, idEmployee, amount, date, MONTHNAME(date) as monthname, "
+			+ "YEAR(date) as yeardate, SUM(amount) as totalmonth FROM Compensation "
+			+ "WHERE idEmployee = :idEmployee GROUP BY monthname, yeardate, id, type, description, idEmployee, amount, date", nativeQuery = true)
+	
 	List <Compensation> findCompensationsByEmployeeId(@Param("idEmployee") int idEmployee);
+	
 
 }

@@ -33,7 +33,7 @@ import com.casestudy.employeessystem.service.EmployeeServiceImpl;
 
 @Controller
 public class SystemsController {
-	
+
 	@Autowired
 	private IUserRepository userRepo;
 	@Autowired
@@ -41,20 +41,19 @@ public class SystemsController {
 	@Autowired
 	private EmployeeServiceImpl emplService;
 
-	
 	// ________index page______________
 	@GetMapping("/")
 	public String index() {
 		return "index";
 	}
 
-	
 	// ________register form______________
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
 	}
+
 	// ________make the registration___________
 	@PostMapping("/process_register")
 	public String processRegistration(@Valid User user) {
@@ -67,14 +66,12 @@ public class SystemsController {
 		return "sucessful_registration";
 	}
 
-	
 	// ________welcome page______________
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "welcome";
 	}
 
-	
 	// ________add an employee form_____________
 	@GetMapping("/employee/add")
 	public String addEmplForm(Model model) {
@@ -82,45 +79,41 @@ public class SystemsController {
 		model.addAttribute(empl);
 		return "add_employee";
 	}
+
 	// ________save the employee________________
 	@PostMapping("/employee")
-	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl, RedirectAttributes redirAttrs) { // send the employee object
-		// get the birth date of the employee and convert it to java.util.date
+	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl) {
+		// get the birth date and check it
 		Date birthDate = empl.getBirthDate();
-		java.util.Date birthDateUtilDate = new java.util.Date(birthDate.getTime());
-		// get actual date
-		LocalDateTime dateTime = LocalDateTime.now();
-		// obtain minimum date
-		LocalDateTime oldDate = dateTime.minusYears(21);
-		java.util.Date c2 = oldDate.toDateTime().toDate();
-		
-		if(birthDateUtilDate.before(c2)) {
-			if(emplService.exists(empl)!=true) { //successfully added
+
+		if (emplService.isValidBirthDate(birthDate)) {
+			if (emplService.exists(empl) != true) { // successfully added
 				emplService.saveEmployees(empl);
 				return "redirect:/welcome?success";
-			}else //error, employee already exists
+			} else // error, employee already exists
 				return "redirect:/welcome?duplicate";
-		}else //wrong date
+		} else // wrong date
 			return "redirect:/welcome?invalid";
 	}
 
-	
 	// _______search form________________________
 	@GetMapping("/search/form")
 	public String searchForm() {
 		return "search";
 	}
+
 	// _______search the employee___________
 	@RequestMapping("/search")
-	public String searchEmpl(Model model, String fname, String lname, String pos) {
-		try {
-			List<Employee> list = emplService.findEmployee(fname, lname, pos);
+	public String searchEmpl(Model model, String fname, String lname, String pos, RedirectAttributes redirAttrs) {
+		List<Employee> list = emplService.findEmployee(fname, lname, pos);
+		if (list != null && list.isEmpty()) {
+			redirAttrs.addFlashAttribute("empty", "0 results found.");
+			return "redirect:/welcome";
+		} else {
 			model.addAttribute("list", list);
-
-		} catch (Exception ex) {
-			System.out.println(ex);
+			return "search";
 		}
-		return "search";
+
 	}
 
 	/*
@@ -132,50 +125,66 @@ public class SystemsController {
 	 * 
 	 * return "employees"; }
 	 */
-	
+
 	// _______edit employee______________
 	@GetMapping("/employee/{uid}/edit")
 	public String editEmployeeForm(@PathVariable int uid, Model model) { // receive the uid to get its info
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		return "edit_employee";
 	}
+
 	// _______update info employee________
 	@PostMapping("/employee/{uid}")
 	public String updateEmployee(@PathVariable int uid, @ModelAttribute("employee") Employee employee, Model model) {
+		// check birth date
+		Date bday = employee.getBirthDate();
 		Employee existingEmpl = emplService.getEmployeeById(uid);
-		existingEmpl.setUid(employee.getUid());
-		existingEmpl.setFirstName(employee.getFirstName()); // from the employee in the form, assign the data
-		existingEmpl.setLastName(employee.getLastName());
-		existingEmpl.setMiddleName(employee.getMiddleName());
-		existingEmpl.setPosition(employee.getPosition());
-		existingEmpl.setBirthDate(employee.getBirthDate());
 
-		emplService.updateEmployee(existingEmpl);
-		return "redirect:/welcome";
+		if (emplService.isValidBirthDate(bday)) {
+			if (emplService.exists(employee) != true) { //successfully added
+				existingEmpl.setUid(employee.getUid());
+				existingEmpl.setFirstName(employee.getFirstName()); // from the employee in the form, assign the data
+				existingEmpl.setLastName(employee.getLastName());
+				existingEmpl.setMiddleName(employee.getMiddleName());
+				existingEmpl.setPosition(employee.getPosition());
+				existingEmpl.setBirthDate(bday);
+
+				emplService.updateEmployee(existingEmpl);
+				return "redirect:/search/form?success";
+			}
+			else { //error, that employee already exists
+				return "redirect:/search/form?duplicate";
+			}
+		}
+		else { //invalid birth date
+			return "redirect:/search/form?invalid";
+		}
+
 	}
-	
-	
-	
-	//________view employee's compensation history_______
+
+	// ________view employee's compensation history_______
 	@GetMapping("/employee/{uid}/view_compensation")
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
-		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); //obtain month and amount of each compensation
+		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain month and amount of
+																							// each compensation
 		model.addAttribute("listComp", compensations);
 		return "compensation_history";
 	}
-	//________new compensation form_________________
+
+	// ________new compensation form_________________
 	@GetMapping("/employee/{uid}/new_compensation")
 	public String compensationForm(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
-		return "add_compensation";  
-			
+		return "add_compensation";
+
 	}
-	//________add a new compensation__________________
+
+	// ________add a new compensation__________________
 	@PostMapping("/employee/{uid}/add_compensation")
 	public String addCompensation(@ModelAttribute("compensations") @Valid Compensation comp) {
-		return "add_compensation";  
-			
+		return "add_compensation";
+
 	}
 
 	// DB error

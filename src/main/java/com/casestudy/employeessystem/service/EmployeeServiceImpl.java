@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,11 @@ public class EmployeeServiceImpl{
 	}
 
 	public List<Employee> findEmployee(String fname, String lname, String pos) {
-		return repo.findEmployee(fname, lname, pos);
+		List<Employee> employees = repo.findEmployee(fname, lname, pos);
+		if(employees != null && employees.isEmpty()) {
+			System.out.println("0 results");
+		}
+		return employees;
 	}
 
 	public Boolean exists(Employee empl) {
@@ -51,6 +56,22 @@ public class EmployeeServiceImpl{
 			return true;
 		}
 		else
+			return false;
+	}
+	
+	
+	public Boolean isValidBirthDate(Date bday) {
+		//convert Date.sql to util.Date
+		java.util.Date bdayUtilDate = new java.util.Date(bday.getTime());
+		// get actual date
+		LocalDateTime dateTime = LocalDateTime.now();
+		// obtain minimum date
+		LocalDateTime oldDate = dateTime.minusYears(21);
+		java.util.Date c2 = oldDate.toDateTime().toDate();
+		//compare
+		if(bdayUtilDate.before(c2)) {
+			return true;
+		}else
 			return false;
 	}
 

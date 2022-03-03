@@ -22,7 +22,7 @@ public class Compensation {
 	@Column(name = "type", nullable = false)
 	private String type;
 	@Column(name = "amount", nullable = false)
-	private int amount;
+	private float amount;
 	@Column(name = "description", nullable = true)
 	private String description;
 	@Column(name = "date", nullable = false)
@@ -30,15 +30,19 @@ public class Compensation {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "idemployee", nullable=false)
 	private Employee idEmployee;
-	@Column(name = "monthname", nullable = true)
+	@Column(name = "monthname", nullable = false)
 	private String monthname;
+	@Column(name = "yeardate", nullable = false)
+	private String yeardate;
+	@Column(name = "totalmonth", nullable = false)
+	private float totalmonth;
 	
 	// constructors
 	public Compensation() {
 		
 	}
 	
-	public Compensation(int id, String type, int amount, String description, Date date, Employee idEmployee) {
+	public Compensation(int id, String type, float amount, String description, Date date, Employee idEmployee) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -61,10 +65,10 @@ public class Compensation {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getAmount() {
+	public float getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(float amount) {
 		this.amount = amount;
 	}
 	public String getDescription() {
@@ -92,6 +96,23 @@ public class Compensation {
 
 	public void setMonthname(String monthname) {
 		this.monthname = monthname;
+	}
+	
+
+	public String getYeardate() {
+		return yeardate;
+	}
+
+	public void setYeardate(String yeardate) {
+		this.yeardate = yeardate;
+	}
+
+	public float getTotalmonth() {
+		return totalmonth;
+	}
+
+	public void setTotalmonth(float totalmonth) {
+		this.totalmonth = totalmonth;
 	}
 
 	@Override

@@ -81,9 +81,9 @@
 				</thead>
 				<tbody>
 					<tr th:each="compensation : ${listComp}">
-						<th scope="row">2019</th>
+						<th th:text="${compensation.yeardate}" scope="row"></th>
 						<td><a th:text="${compensation.monthname}" href=""></a></td>
-						<td th:text="'$' + ${compensation.amount}"></td>
+						<td th:text="'$' + ${compensation.totalmonth}"></td>
 					</tr>
 					<tr class="table-dark">
 						<th scope="row">Total</th>

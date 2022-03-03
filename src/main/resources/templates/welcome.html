@@ -25,16 +25,10 @@
 	<div class="container text-center">
 
 		<!-- Alerts -->
-		<div th:if="${param.success}">
-			<div class="alert alert-primary">The employee was succesfully added.</div>
-		</div>
-		<div th:if="${param.duplicate}">
-			<div class="alert alert-danger">That employee already exists in the system.</div>
-		</div>
-		<div th:if="${param.invalid}">
-			<div class="alert alert-warning">Please enter a valid birth date.</div>
-		</div>
-
+		<div class="alert alert-success" role="alert" th:if="${param.success}">Employee added successfully.</div>
+		<div class="alert alert-danger" role="alert"  th:if="${param.duplicate}">That employee already exists in the system.</div>
+		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a correct birth date, please.</div>
+		<div class="alert alert-danger" role="alert" th:text="${empty}" th:if="${empty}"></div>
 
 		<div class="cenefa">
 			<h1 class="mt-5">Welcome <span th:text="${#request.userPrincipal.principal.name}"></span> to the Employee's

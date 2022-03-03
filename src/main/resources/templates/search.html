@@ -23,6 +23,12 @@
 	<div class="container">
 		<h3 class="my-3">Search for an Employee</h3>
 		<div class="row mt-2">
+			<div class="alert alert-success" role="alert" th:if="${param.success}">Employee's information updated successfully.</div>
+			<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">That employee already exists in the
+				system.</div>
+			<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a correct birth date, please.
+			</div>
+			<!-- Search form -->
 			<div class="col-10">
 				<form th:action="@{/search}" class="d-flex" method="GET">
 					<input class="form-control me-3" type="search" placeholder="First name" aria-label="firstName"
@@ -35,22 +41,38 @@
 					<button class="btn btn-secondary me-3" type="clear">Clean</button>
 				</form>
 
+				<!-- Search results -->
 				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">UID</th>
+							<th scope="col">First name</th>
+							<th scope="col">Middle name</th>
+							<th scope="col">Last name</th>
+							<th scope="col">Position</th>
+							<th scope="col">Birth date</th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr th:each="employee : ${list}">
+							<td th:text="${employee.uid}"></td>
 							<td th:text="${employee.firstName}"></td>
 							<td th:text="${employee.middleName}"></td>
 							<td th:text="${employee.lastName}"></td>
 							<td th:text="${employee.position}"></td>
+							<td th:text="${employee.birthDate}"></td>
 							<td>
-								<a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}" class="btn btn-outline-primary btn-sm">Edit</a>
+								<a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}"
+									class="btn btn-outline-primary btn-sm">Edit</a>
 							</td>
 							<td>
-								<a th:href="@{/employee/{uid}/view_compensation(uid=${employee.uid})}" class="btn btn-primary btn-sm">Compensations</a>
+								<a th:href="@{/employee/{uid}/view_compensation(uid=${employee.uid})}"
+									class="btn btn-primary btn-sm">Compensations</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+
 			</div>
 		</div>
 	</div>
