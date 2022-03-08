@@ -2,6 +2,8 @@ package com.casestudy.employeessystem.cotrollers;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
@@ -25,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.casestudy.employeessystem.models.Compensation;
 import com.casestudy.employeessystem.models.Employee;
@@ -161,11 +162,20 @@ public class SystemsController {
 	@RequestMapping(value = "/employee/{uid}/view_compensation", method = RequestMethod.GET)
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
-		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain month and amount of
-																							// each compensation
+		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations																			// each compensation
 		model.addAttribute("listComp", compensations);
 		return "compensation_history";
 	}
+	//__________search compensations by date ____________
+	@GetMapping("/employee/{uid}/view_compensation/dates")
+	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid) throws ParseException{
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate);
+		System.out.println(compensations.get(1));
+		model.addAttribute("listComp", compensations);
+		return "compensation_history";
+	}
+	
 	// ________new compensation form_________________
 	@RequestMapping(value = "/employee/{uid}/new_compensation", method = RequestMethod.GET)
 	public String compensationForm(@PathVariable int uid, Model model) {
@@ -180,7 +190,7 @@ public class SystemsController {
 		Employee emp = emplService.getEmployeeById(uid);
 		comp.setIdEmployee(emp);
 		compService.saveCompensation(comp);
-		return "redirect:/compensation_history?success";
+		return "redirect:/employee/{uid}/view_compensation";
 	}
 
 	// DB error

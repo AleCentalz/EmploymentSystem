@@ -10,13 +10,14 @@ import org.springframework.data.repository.query.Param;
 import com.casestudy.employeessystem.models.Compensation;
 
 public interface ICompensationRepository extends JpaRepository<Compensation, Integer> {
-	//fin compensations by start date and end date
-	//List<Compensation> findCompensationByDate(Date date);
+	//find compensations by start date and end date
+	@Query(value="SELECT id, type, description, idEmployee, amount, date FROM Compensation "
+			+ "WHERE date >= :startDate AND date < :endDate", nativeQuery = true)
+	List<Compensation> findCompensationByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 	//find compensations by employee id to show in the history
 	@Query(value="SELECT id, type, description, idEmployee, amount, date FROM Compensation "
 			+ "WHERE idEmployee = :idEmployee", nativeQuery = true)
-	
 	List <Compensation> findCompensationsByEmployeeId(@Param("idEmployee") int idEmployee);	
 
 }

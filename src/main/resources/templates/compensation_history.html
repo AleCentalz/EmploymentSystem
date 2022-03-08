@@ -41,22 +41,22 @@
 
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/search}" class="d-flex" method="GET">
+				<form th:action="@{/employee/{uid}/view_compensation/dates(uid=${employee.uid})}" class="d-flex" method="GET">
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="inputGroup-sizing-sm">Start date</span>
 						</div>
-						<input type="date" class="form-control" aria-label="Small"
-							aria-describedby="inputGroup-sizing-sm">
+						<input type="month" name="sDate" min="1970-01" value="2022-12" max="2023-12" class="form-control"
+							aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 					</div>
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
-							<span class="input-group-text" id="inputGroup-sizing-sm">Start date</span>
+							<span class="input-group-text" id="inputGroup-sizing-sm">End date</span>
 						</div>
-						<input type="date" class="form-control" aria-label="Small"
-							aria-describedby="inputGroup-sizing-sm">
+						<input type="month" name="eDate" min="1970-01" value="2022-12" max="2023-12" class="form-control"
+							aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 					</div>
-					<button class="btn btn-secondary btn-sm mb-3" type="button">Button</button>
+					<button class="btn btn-secondary btn-sm mb-3" type="submit">Search</button>
 				</form>
 			</div>
 			<div class="col">
