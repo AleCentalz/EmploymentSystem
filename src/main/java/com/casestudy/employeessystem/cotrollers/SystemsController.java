@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.joda.time.LocalDateTime;
@@ -21,14 +22,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.casestudy.employeessystem.models.Compensation;
 import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.models.User;
 import com.casestudy.employeessystem.repositories.IUserRepository;
-import com.casestudy.employeessystem.service.CompensationService;
+import com.casestudy.employeessystem.service.CompensationServiceImpl;
 import com.casestudy.employeessystem.service.EmployeeServiceImpl;
 
 @Controller
@@ -37,7 +40,7 @@ public class SystemsController {
 	@Autowired
 	private IUserRepository userRepo;
 	@Autowired
-	private CompensationService compService;
+	private CompensationServiceImpl compService;
 	@Autowired
 	private EmployeeServiceImpl emplService;
 
@@ -46,6 +49,7 @@ public class SystemsController {
 	public String index() {
 		return "index";
 	}
+	
 
 	// ________register form______________
 	@GetMapping("/register")
@@ -53,7 +57,6 @@ public class SystemsController {
 		model.addAttribute("user", new User());
 		return "register";
 	}
-
 	// ________make the registration___________
 	@PostMapping("/process_register")
 	public String processRegistration(@Valid User user) {
@@ -65,12 +68,14 @@ public class SystemsController {
 
 		return "sucessful_registration";
 	}
+	
 
 	// ________welcome page______________
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "welcome";
 	}
+	
 
 	// ________add an employee form_____________
 	@GetMapping("/employee/add")
@@ -79,7 +84,6 @@ public class SystemsController {
 		model.addAttribute(empl);
 		return "add_employee";
 	}
-
 	// ________save the employee________________
 	@PostMapping("/employee")
 	public String addNewEmployee(@ModelAttribute("employee") @Valid Employee empl) {
@@ -95,13 +99,13 @@ public class SystemsController {
 		} else // wrong date
 			return "redirect:/welcome?invalid";
 	}
+	
 
 	// _______search form________________________
 	@GetMapping("/search/form")
 	public String searchForm() {
 		return "search";
 	}
-
 	// _______search the employee___________
 	@RequestMapping("/search")
 	public String searchEmpl(Model model, String fname, String lname, String pos, RedirectAttributes redirAttrs) {
@@ -115,16 +119,7 @@ public class SystemsController {
 		}
 
 	}
-
-	/*
-	 * // _______view all the employees________
-	 * 
-	 * @GetMapping("/list") public String listEmployees(Model model) { try {
-	 * model.addAttribute("employees", service.listAllEmployees()); // employee's
-	 * list } catch (Exception ex) { System.out.println(ex); }
-	 * 
-	 * return "employees"; }
-	 */
+	
 
 	// _______edit employee______________
 	@GetMapping("/employee/{uid}/edit")
@@ -132,7 +127,6 @@ public class SystemsController {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		return "edit_employee";
 	}
-
 	// _______update info employee________
 	@PostMapping("/employee/{uid}")
 	public String updateEmployee(@PathVariable int uid, @ModelAttribute("employee") Employee employee, Model model) {
@@ -162,8 +156,9 @@ public class SystemsController {
 
 	}
 
+	
 	// ________view employee's compensation history_______
-	@GetMapping("/employee/{uid}/view_compensation")
+	@RequestMapping(value = "/employee/{uid}/view_compensation", method = RequestMethod.GET)
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain month and amount of
@@ -171,20 +166,21 @@ public class SystemsController {
 		model.addAttribute("listComp", compensations);
 		return "compensation_history";
 	}
-
 	// ________new compensation form_________________
-	@GetMapping("/employee/{uid}/new_compensation")
+	@RequestMapping(value = "/employee/{uid}/new_compensation", method = RequestMethod.GET)
 	public String compensationForm(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		Compensation comp = new Compensation();
+		model.addAttribute(comp);
 		return "add_compensation";
-
 	}
-
 	// ________add a new compensation__________________
 	@PostMapping("/employee/{uid}/add_compensation")
-	public String addCompensation(@ModelAttribute("compensations") @Valid Compensation comp) {
-		return "add_compensation";
-
+	public String addCompensation(@ModelAttribute("compensation") @Valid Compensation comp, @PathVariable("uid") int uid) {
+		Employee emp = emplService.getEmployeeById(uid);
+		comp.setIdEmployee(emp);
+		compService.saveCompensation(comp);
+		return "redirect:/compensation_history?success";
 	}
 
 	// DB error

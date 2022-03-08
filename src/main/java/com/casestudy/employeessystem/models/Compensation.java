@@ -30,12 +30,13 @@ public class Compensation {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "idemployee", nullable=false)
 	private Employee idEmployee;
-	@Column(name = "monthname", nullable = false)
-	private String monthname;
-	@Column(name = "yeardate", nullable = false)
-	private String yeardate;
-	@Column(name = "totalmonth", nullable = false)
-	private float totalmonth;
+	/*
+	 * @Column(name = "monthname", nullable = false) private String monthname;
+	 * 
+	 * @Column(name = "yeardate", nullable = false) private String yeardate;
+	 * 
+	 * @Column(name = "totalmonth", nullable = false) private float totalmonth;
+	 */
 	
 	// constructors
 	public Compensation() {
@@ -88,31 +89,6 @@ public class Compensation {
 	}
 	public void setIdEmployee(Employee idEmployee) {
 		this.idEmployee = idEmployee;
-	}
-	
-	public String getMonthname() {
-		return monthname;
-	}
-
-	public void setMonthname(String monthname) {
-		this.monthname = monthname;
-	}
-	
-
-	public String getYeardate() {
-		return yeardate;
-	}
-
-	public void setYeardate(String yeardate) {
-		this.yeardate = yeardate;
-	}
-
-	public float getTotalmonth() {
-		return totalmonth;
-	}
-
-	public void setTotalmonth(float totalmonth) {
-		this.totalmonth = totalmonth;
 	}
 
 	@Override

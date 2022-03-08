@@ -31,7 +31,7 @@
 				<h6 th:text="${employee.position}"></h6>
 			</div>
 			<div class="col">
-				<a th:href="@{/employee/edit/{uid}(uid=${employee.uid})}"
+				<a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}"
 					class="btn btn-outline-primary btn-sm">Edit</a>
 			</div>
 			<div class="col">
@@ -60,10 +60,12 @@
 				</form>
 			</div>
 			<div class="col">
-				<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="btn btn-primary" role="button">Add a new compensation</a>
+				<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="btn btn-primary"
+					role="button">Add a new compensation</a>
 			</div>
 		</div>
-
+		<!-- Alerts -->
+		<div class="alert alert-success" role="alert" th:if="${param.success}">Compensation added successfully.</div>
 
 		<div class="row">
 			<table class="table">
@@ -81,9 +83,9 @@
 				</thead>
 				<tbody>
 					<tr th:each="compensation : ${listComp}">
-						<th th:text="${compensation.yeardate}" scope="row"></th>
-						<td><a th:text="${compensation.monthname}" href=""></a></td>
-						<td th:text="'$' + ${compensation.totalmonth}"></td>
+						<th th:text="${compensation.date}" scope="row"></th>
+						<td><a th:text="${compensation.date}" href=""></a></td>
+						<td th:text="'$' + ${compensation.amount}"></td>
 					</tr>
 					<tr class="table-dark">
 						<th scope="row">Total</th>

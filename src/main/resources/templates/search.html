@@ -23,10 +23,14 @@
 	<div class="container">
 		<h3 class="my-3">Search for an Employee</h3>
 		<div class="row mt-2">
-			<div class="alert alert-success" role="alert" th:if="${param.success}">Employee's information updated successfully.</div>
-			<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">That employee already exists in the
+			<div class="alert alert-success" role="alert" th:if="${param.success}">
+				Employee's information updated successfully.
+			</div>
+			<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">That
+				employee already exists in the
 				system.</div>
-			<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a correct birth date, please.
+			<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a
+				correct birth date, please.
 			</div>
 			<!-- Search form -->
 			<div class="col-10">
