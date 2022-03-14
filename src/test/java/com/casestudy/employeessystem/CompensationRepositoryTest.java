@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import com.casestudy.employeessystem.models.Compensation;
+import com.casestudy.employeessystem.models.User;
 import com.casestudy.employeessystem.repositories.ICompensationRepository;
 
 @DataJpaTest
@@ -36,5 +37,12 @@ public class CompensationRepositoryTest {
 	 * 
 	 * }
 	 */
+	
+	@Test public void testFindByMonth() {
+		String month = "October";
+		List<Compensation> result = repo.findByMonth(month, 1, 2018);
+		assertThat(result).isNotNull();
+	}
+	
 
 }

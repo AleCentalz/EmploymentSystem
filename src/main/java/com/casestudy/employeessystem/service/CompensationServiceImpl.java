@@ -36,6 +36,10 @@ public class CompensationServiceImpl  {
 	public List<Compensation> findCompensationsByEmployeeId(int idEmployee){
 		return repo.findCompensationsByEmployeeId(idEmployee);
 	}
+	
+	public Float getTotal(int idEmployee) {
+		return repo.getTotal(idEmployee);
+	}
 
 	public List<Compensation> findCompensationsByDates(String sDate, String eDate) throws ParseException{
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -47,6 +51,10 @@ public class CompensationServiceImpl  {
 		 System.out.println(endDate);
 		 System.out.println(startDate);
 		return repo.findCompensationByDate(startDate, endDate);
+	}
+	
+	public List<Compensation> findCompensationsByMonthname(String month, int idEmployee, int year){
+		return repo.findByMonth(month, idEmployee, year);
 	}
 	
 }

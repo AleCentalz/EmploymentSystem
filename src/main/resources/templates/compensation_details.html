@@ -1,0 +1,58 @@
+<html lang="en" xmlns:theadh="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Compensation Details</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/welcome">
+				Employment System
+			</a>
+			<form th:action="@{/logout}" method="post">
+				<input class="btn btn-secondary btn-sm" type="submit" value="Sign Out" />
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h1>Compensations details of <span th:text="${month}"></span></h1>
+
+		<div class="row">
+			<table class="table">
+				<thead class="text-center">
+					<tr class="table-secondary">
+						<th colspan="3">Compensations</th>
+					</tr>
+				</thead>
+				<thead>
+					<tr>
+						<th>Month</th>
+						<th>Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="compensation : ${list}">
+						<td th:text="${#dates.monthName(compensation.date)}"></td> 
+						<td th:text="${compensation.type} + '$' + ${compensation.amount}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="col">
+			<a href="/employee/{uid}/view_compensation" class="btn btn-outline-secondary" role="button">Back to history</a>
+		</div>
+		
+	</div>
+</body>
+
+</html>

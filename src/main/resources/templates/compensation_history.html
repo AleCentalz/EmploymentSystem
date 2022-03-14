@@ -85,12 +85,12 @@
 				<tbody>
 					<tr th:each="compensation : ${listComp}">
 						<th th:text="${#dates.year(compensation.date)}" scope="row"></th>
-						<td><a th:text="${#dates.monthName(compensation.date)}" href=""></a></td>
+						<td><a th:text="${#dates.monthName(compensation.date)}" href="@{/employee/{uid}/view_details/{month}(uid=${employee.uid}, month=${#dates.monthName(compensation.date)})}"></a></td> <!-- Send to a new template to view compensations by that month-->
 						<td th:text="'$' + ${compensation.amount}"></td>
 					</tr>
 					<tr class="table-dark">
 						<th scope="row">Total</th>
-						<td colspan="2"></td>
+						<td colspan="2" th:text="${total}"></td>
 					</tr>
 
 				</tbody>

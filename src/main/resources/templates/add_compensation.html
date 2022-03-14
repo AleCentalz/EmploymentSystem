@@ -23,7 +23,7 @@
 	<div class="container">
 		<h3 class="my-3">Add a new compensation</h3>
 
-		<form th:action="@{/employee/{uid}/add_compensation(uid=${employee.uid})}" th:object="${compensation}"
+		<form th:action="@{/employee/{uid}/add_newcompensation(uid=${employee.uid})}" th:object="${compensation}"
 			method="post">
 			<div class="form-group">
 				<label for="type">Type</label>

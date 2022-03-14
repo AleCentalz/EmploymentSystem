@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.casestudy.employeessystem.models.Compensation;
@@ -172,9 +173,21 @@ public class SystemsController {
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations																			// each compensation
+		Float total = compService.getTotal(uid); //get total
 		model.addAttribute("listComp", compensations);
+		model.addAttribute("total", total);
 		return "compensation_history";
 	}
+	//________view employee's compensation details by month______
+	@RequestMapping(value="/employee/{uid}/view_details/{month}", method = RequestMethod.GET)
+	public String viewDetails(@PathVariable int uid, @PathVariable String month, @PathVariable int year, Model model) {
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		List<Compensation> compensations = compService.findCompensationsByMonthname(month, uid, year);
+		model.addAttribute("list", compensations);
+		model.addAttribute("month", month);
+		return "compensation_details";
+	}
+	
 	//__________search compensations by date ____________
 	@GetMapping("/employee/{uid}/view_compensation/dates")
 	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid) throws ParseException{
@@ -187,14 +200,15 @@ public class SystemsController {
 	
 	// ________new compensation form_________________
 	@RequestMapping(value = "/employee/{uid}/new_compensation", method = RequestMethod.GET)
-	public String compensationForm(@PathVariable int uid, Model model) {
-		model.addAttribute("employee", emplService.getEmployeeById(uid));
+	public ModelAndView compensationForm(@PathVariable int uid) {
+		ModelAndView model = new ModelAndView("add_compensation");
+		model.addObject("employee", emplService.getEmployeeById(uid));
 		Compensation comp = new Compensation();
-		model.addAttribute(comp);
-		return "add_compensation";
+		model.addObject(comp);
+		return model;
 	}
 	// ________add a new compensation__________________
-	@PostMapping("/employee/{uid}/add_compensation")
+	@PostMapping("/employee/{uid}/add_newcompensation")
 	public String addCompensation(@ModelAttribute("compensation") @Valid Compensation comp, @PathVariable("uid") int uid) {
 		Employee emp = emplService.getEmployeeById(uid);
 		comp.setIdEmployee(emp);

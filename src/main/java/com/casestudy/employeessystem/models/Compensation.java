@@ -30,13 +30,6 @@ public class Compensation {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "idemployee", nullable=false)
 	private Employee idEmployee;
-	/*
-	 * @Column(name = "monthname", nullable = false) private String monthname;
-	 * 
-	 * @Column(name = "yeardate", nullable = false) private String yeardate;
-	 * 
-	 * @Column(name = "totalmonth", nullable = false) private float totalmonth;
-	 */
 	
 	// constructors
 	public Compensation() {
