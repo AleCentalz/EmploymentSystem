@@ -33,6 +33,7 @@ import com.casestudy.employeessystem.models.Employee;
 import com.casestudy.employeessystem.models.User;
 import com.casestudy.employeessystem.repositories.IUserRepository;
 import com.casestudy.employeessystem.service.CompensationServiceImpl;
+import com.casestudy.employeessystem.service.CustomUserDetailsService;
 import com.casestudy.employeessystem.service.EmployeeServiceImpl;
 
 @Controller
@@ -42,6 +43,8 @@ public class SystemsController {
 	private IUserRepository userRepo;
 	@Autowired
 	private CompensationServiceImpl compService;
+	@Autowired
+	private CustomUserDetailsService userService;
 	@Autowired
 	private EmployeeServiceImpl emplService;
 
@@ -61,13 +64,19 @@ public class SystemsController {
 	// ________make the registration___________
 	@PostMapping("/process_register")
 	public String processRegistration(@Valid User user) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String encodedPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
+		//email verification
+		if(userService.patternMatches(user.getEmail(),"^(.+)@ibm.com$")) { 
+			//correct
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String encodedPassword = passwordEncoder.encode(user.getPassword());
+			user.setPassword(encodedPassword);
+			userRepo.save(user);
 
-		userRepo.save(user);
-
-		return "sucessful_registration";
+			return "sucessful_registration";
+		}else {
+			//its not an IBM email
+			return "redirect:/register?invalid";
+		}
 	}
 	
 
@@ -108,7 +117,7 @@ public class SystemsController {
 		return "search";
 	}
 	// _______search the employee___________
-	@RequestMapping("/search")
+	@RequestMapping(value="/search", method = RequestMethod.GET)
 	public String searchEmpl(Model model, String fname, String lname, String pos, RedirectAttributes redirAttrs) {
 		List<Employee> list = emplService.findEmployee(fname, lname, pos);
 		if (list != null && list.isEmpty()) {
@@ -190,7 +199,7 @@ public class SystemsController {
 		Employee emp = emplService.getEmployeeById(uid);
 		comp.setIdEmployee(emp);
 		compService.saveCompensation(comp);
-		return "redirect:/employee/{uid}/view_compensation";
+		return "redirect:/employee/{uid}/view_compensation?success";
 	}
 
 	// DB error

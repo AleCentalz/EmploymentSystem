@@ -41,20 +41,21 @@
 
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/employee/{uid}/view_compensation/dates(uid=${employee.uid})}" class="d-flex" method="GET">
+				<form th:action="@{/employee/{uid}/view_compensation/dates(uid=${employee.uid})}" class="d-flex"
+					method="GET">
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="inputGroup-sizing-sm">Start date</span>
 						</div>
-						<input type="month" name="sDate" min="1970-01" value="2022-12" max="2023-12" class="form-control"
-							aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+						<input type="month" name="sDate" min="1970-01" value="2022-12" max="2023-12"
+							class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 					</div>
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="inputGroup-sizing-sm">End date</span>
 						</div>
-						<input type="month" name="eDate" min="1970-01" value="2022-12" max="2023-12" class="form-control"
-							aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+						<input type="month" name="eDate" min="1970-01" value="2022-12" max="2023-12"
+							class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
 					</div>
 					<button class="btn btn-secondary btn-sm mb-3" type="submit">Search</button>
 				</form>
@@ -83,8 +84,8 @@
 				</thead>
 				<tbody>
 					<tr th:each="compensation : ${listComp}">
-						<th th:text="${compensation.date}" scope="row"></th>
-						<td><a th:text="${compensation.date}" href=""></a></td>
+						<th th:text="${#dates.year(compensation.date)}" scope="row"></th>
+						<td><a th:text="${#dates.monthName(compensation.date)}" href=""></a></td>
 						<td th:text="'$' + ${compensation.amount}"></td>
 					</tr>
 					<tr class="table-dark">
