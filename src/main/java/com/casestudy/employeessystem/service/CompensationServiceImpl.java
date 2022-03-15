@@ -43,18 +43,20 @@ public class CompensationServiceImpl  {
 
 	public List<Compensation> findCompensationsByDates(String sDate, String eDate) throws ParseException{
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-
+		 
 		 java.util.Date date1 = sdf.parse(sDate);
 		 java.util.Date date2 = sdf.parse(eDate);
 		 java.sql.Date startDate = new Date(date1.getTime());
 		 java.sql.Date endDate = new Date(date2.getTime());
 		 System.out.println(endDate);
 		 System.out.println(startDate);
+		 
+		 //review dates entries to avoid errors
 		return repo.findCompensationByDate(startDate, endDate);
 	}
 	
-	public List<Compensation> findCompensationsByMonthname(String month, int idEmployee, int year){
-		return repo.findByMonth(month, idEmployee, year);
+	public List<Compensation> findCompensationsByMonthname(int idEmployee, String month, int year){
+		return repo.findByMonth(idEmployee, month, year);
 	}
 	
 }

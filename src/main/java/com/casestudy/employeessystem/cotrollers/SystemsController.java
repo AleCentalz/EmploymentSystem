@@ -169,7 +169,7 @@ public class SystemsController {
 
 	
 	// ________view employee's compensation history_______
-	@RequestMapping(value = "/employee/{uid}/view_compensation", method = RequestMethod.GET)
+	@RequestMapping(value = "/employee/{uid}/compensation_history", method = RequestMethod.GET)
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations																			// each compensation
@@ -179,17 +179,18 @@ public class SystemsController {
 		return "compensation_history";
 	}
 	//________view employee's compensation details by month______
-	@RequestMapping(value="/employee/{uid}/view_details/{month}", method = RequestMethod.GET)
+	@RequestMapping("/employee/{uid}/compensation_details/{month}/{year}")
 	public String viewDetails(@PathVariable int uid, @PathVariable String month, @PathVariable int year, Model model) {
-		model.addAttribute("employee", emplService.getEmployeeById(uid));
-		List<Compensation> compensations = compService.findCompensationsByMonthname(month, uid, year);
+		List<Compensation> compensations = compService.findCompensationsByMonthname(uid, month, year); //get the month list
+		model.addAttribute("employee", emplService.getEmployeeById(uid)); //pass parameters to the model
 		model.addAttribute("list", compensations);
 		model.addAttribute("month", month);
+		model.addAttribute("year", year);
 		return "compensation_details";
 	}
 	
 	//__________search compensations by date ____________
-	@GetMapping("/employee/{uid}/view_compensation/dates")
+	@GetMapping("/employee/{uid}/compensation_history/search")
 	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid) throws ParseException{
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate);
@@ -200,12 +201,11 @@ public class SystemsController {
 	
 	// ________new compensation form_________________
 	@RequestMapping(value = "/employee/{uid}/new_compensation", method = RequestMethod.GET)
-	public ModelAndView compensationForm(@PathVariable int uid) {
-		ModelAndView model = new ModelAndView("add_compensation");
-		model.addObject("employee", emplService.getEmployeeById(uid));
+	public String compensationForm(@PathVariable int uid, Model model) {
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		Compensation comp = new Compensation();
-		model.addObject(comp);
-		return model;
+		model.addAttribute(comp);
+		return "add_compensation";
 	}
 	// ________add a new compensation__________________
 	@PostMapping("/employee/{uid}/add_newcompensation")
@@ -213,7 +213,27 @@ public class SystemsController {
 		Employee emp = emplService.getEmployeeById(uid);
 		comp.setIdEmployee(emp);
 		compService.saveCompensation(comp);
-		return "redirect:/employee/{uid}/view_compensation?success";
+		return "redirect:/employee/{uid}/compensation_history?success";
+	}
+	// _______edit compensation______________
+	@GetMapping("/employee/{uid}/edit_compensation/{id}")
+	public String editCompensationForm(@PathVariable int uid, @PathVariable int id,  Model model) { // receive the uid to get its info
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		model.addAttribute("compensation", compService.getCompensation(id)); //get the compensation info from the id
+		return "edit_compensation";
+	}
+	//_______update compensation______________
+	@RequestMapping("/employee/{uid}/edit_compensation/{id}/update")
+	public String editCompensation(@PathVariable int uid, @PathVariable int id, @ModelAttribute("compensation") Compensation comp, Model model) {
+		Compensation existingComp = compService.getCompensation(id);
+		existingComp.setId(comp.getId());
+		existingComp.setType(comp.getType());
+		existingComp.setAmount(comp.getAmount());
+		existingComp.setDescription(comp.getDescription());
+		existingComp.setDate(comp.getDate());
+		
+		compService.updateCompensation(existingComp);
+		return "redirect:/employee/{uid}/compensation_history?updated";
 	}
 
 	// DB error

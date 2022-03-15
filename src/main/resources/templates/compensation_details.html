@@ -24,34 +24,37 @@
 	</nav>
 
 	<div class="container">
-		<h1>Compensations details of <span th:text="${month}"></span></h1>
-
+		<h1>Compensations details of <span th:text="${month}"></span> <span th:text="${year}"></span></h1>
+		
 		<div class="row">
 			<table class="table">
 				<thead class="text-center">
 					<tr class="table-secondary">
-						<th colspan="3">Compensations</th>
-					</tr>
-				</thead>
-				<thead>
-					<tr>
-						<th>Month</th>
-						<th>Details</th>
+						<th colspan="3">Compensations details</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="compensation : ${list}">
-						<td th:text="${#dates.monthName(compensation.date)}"></td> 
-						<td th:text="${compensation.type} + '$' + ${compensation.amount}"></td>
+						<td>
+							<b><span th:text="${compensation.type}"></span></b>
+							<p>$ <span th:text="${compensation.amount}"></span></p>
+							<p><span th:text="${compensation.description}"></span></p>
+							<p><span th:text="${compensation.date}"></span></p>
+						</td>
+						<td>
+							<a th:href="@{/employee/{uid}/edit_compensation/{id}(uid=${employee.uid}, id=${compensation.id})}"
+								class="btn btn-outline-primary btn-sm">Edit</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		
+
 		<div class="col">
-			<a href="/employee/{uid}/view_compensation" class="btn btn-outline-secondary" role="button">Back to history</a>
+			<a th:href="@{/employee/{uid}/view_compensation(uid=${employee.uid})}" class="btn btn-outline-secondary"
+				role="button">Back to history</a>
 		</div>
-		
+
 	</div>
 </body>
 

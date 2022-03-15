@@ -40,7 +40,8 @@ public class CompensationRepositoryTest {
 	
 	@Test public void testFindByMonth() {
 		String month = "October";
-		List<Compensation> result = repo.findByMonth(month, 1, 2018);
+		List<Compensation> result = repo.findByMonth(1, month, 2018);
+		//System.out.println(result.get(1));
 		assertThat(result).isNotNull();
 	}
 	

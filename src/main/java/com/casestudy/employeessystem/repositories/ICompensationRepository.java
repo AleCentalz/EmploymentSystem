@@ -35,6 +35,6 @@ public interface ICompensationRepository extends JpaRepository<Compensation, Int
 	Float getTotal(@Param("idEmployee") int idEmployee);
 	
 	//get compensations by month
-	@Query(value="SELECT * FROM Compensation WHERE MONTHNAME(date) = :monthname and idEmployee = :idEmployee and YEAR(date) = :year", nativeQuery=true)
-	List<Compensation> findByMonth(@Param("monthname") String monthname, @Param("idEmployee") int idEmployee, @Param("year") int year);
+	@Query(value="SELECT * FROM Compensation WHERE MONTHNAME(date) = :month and idEmployee = :idEmployee and YEAR(date) = :year", nativeQuery=true)
+	List<Compensation> findByMonth(@Param("idEmployee") int idEmployee, @Param("month") String month, @Param("year") int year);
 }

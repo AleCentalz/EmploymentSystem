@@ -21,10 +21,12 @@
 		</div>
 	</nav>
 	<div class="container">
-		<h3 class="my-3">Add a new compensation</h3>
-
-		<form th:action="@{/employee/{uid}/add_newcompensation(uid=${employee.uid})}" th:object="${compensation}"
-			method="post">
+		<h3 class="my-3">Edit compensation</h3>
+		<!-- Alerts -->
+		<div class="alert alert-success" role="alert" th:if="${param.success}">Compensation details updated.</div>
+		
+		<form th:action="@{/employee/{uid}/edit_compensation/{id}/update(uid=${employee.uid}, id=${compensation.id})}"
+			th:object="${compensation}" method="POST">
 			<div class="form-group">
 				<label for="type">Type</label>
 				<select class="form-control" id="type" th:field="*{type}">
@@ -47,9 +49,10 @@
 				<label for="date">Date</label>
 				<input type="date" class="form-control" id="date" th:field="*{date}" required>
 			</div>
-			<button type="submit" class="btn btn-primary mb-2">Create</button>
+			<button type="submit" class="btn btn-primary mb-2">Save</button>
 			<a class="btn btn-secondary mt-4" role="button"
-				th:href="@{/employee/{uid}/compensation_history(uid=${employee.uid})}">Cancel</a>
+				th:href="@{/employee/{uid}/compensation_details/{month}/{year}(uid=${employee.uid},month=${#dates.monthName(compensation.date)},year=${#dates.year(compensation.date)} )}"
+				href="#">Cancel</a>
 		</form>
 
 	</div>

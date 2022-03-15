@@ -41,7 +41,7 @@
 
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/employee/{uid}/view_compensation/dates(uid=${employee.uid})}" class="d-flex"
+				<form th:action="@{/employee/{uid}/compensation_history/search(uid=${employee.uid})}" class="d-flex"
 					method="GET">
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
@@ -67,6 +67,7 @@
 		</div>
 		<!-- Alerts -->
 		<div class="alert alert-success" role="alert" th:if="${param.success}">Compensation added successfully.</div>
+		<div class="alert alert-success" role="alert" th:if="${param.updated}">Compensation history updated successfully.</div>
 
 		<div class="row">
 			<table class="table">
@@ -85,15 +86,18 @@
 				<tbody>
 					<tr th:each="compensation : ${listComp}">
 						<th th:text="${#dates.year(compensation.date)}" scope="row"></th>
-						<td><a th:text="${#dates.monthName(compensation.date)}" href="@{/employee/{uid}/view_details/{month}(uid=${employee.uid}, month=${#dates.monthName(compensation.date)})}"></a></td> <!-- Send to a new template to view compensations by that month-->
+						<td> <a th:href="@{/employee/{uid}/compensation_details/{month}/{year}(uid=${employee.uid},month=${#dates.monthName(compensation.date)},year=${#dates.year(compensation.date)} )}"
+								href="#" th:text="${#dates.monthName(compensation.date)}"></a> </td>
+						<!-- Send to a new template to view compensations by that month-->
 						<td th:text="'$' + ${compensation.amount}"></td>
 					</tr>
+				</tbody>
+				<tfoot>
 					<tr class="table-dark">
-						<th scope="row">Total</th>
+						<th scope="row">Total</th> <!-- Total doesnt update with the history results -->
 						<td colspan="2" th:text="${total}"></td>
 					</tr>
-
-				</tbody>
+				</tfoot>
 			</table>
 		</div>
 
