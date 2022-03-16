@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,14 +51,14 @@ public class SystemsController {
 	private EmployeeServiceImpl emplService;
 
 	// ________index page______________
-	@GetMapping("/")
+	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
 	
 
 	// ________register form______________
-	@GetMapping("/register")
+	@RequestMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
@@ -82,7 +83,7 @@ public class SystemsController {
 	
 
 	// ________welcome page______________
-	@GetMapping("/welcome")
+	@RequestMapping("/welcome")
 	public String welcome() {
 		return "welcome";
 	}
@@ -113,12 +114,12 @@ public class SystemsController {
 	
 
 	// _______search form________________________
-	@GetMapping("/search/form")
+	@RequestMapping("/search/form")
 	public String searchForm() {
 		return "search";
 	}
 	// _______search the employee___________
-	@RequestMapping(value="/search", method = RequestMethod.GET)
+	@GetMapping("/search")
 	public String searchEmpl(Model model, String fname, String lname, String pos, RedirectAttributes redirAttrs) {
 		List<Employee> list = emplService.findEmployee(fname, lname, pos);
 		if (list != null && list.isEmpty()) {
@@ -128,12 +129,11 @@ public class SystemsController {
 			model.addAttribute("list", list);
 			return "search";
 		}
-
 	}
 	
 
-	// _______edit employee______________
-	@GetMapping("/employee/{uid}/edit")
+	// _______edit employee form____________
+	@RequestMapping("/employee/{uid}/edit")
 	public String editEmployeeForm(@PathVariable int uid, Model model) { // receive the uid to get its info
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		return "edit_employee";
@@ -155,21 +155,21 @@ public class SystemsController {
 				existingEmpl.setBirthDate(bday);
 
 				emplService.updateEmployee(existingEmpl);
-				return "redirect:/search/form?success";
+				return "redirect:/employee/{uid}/compensation_history?updateuser";
 			}
 			else { //error, that employee already exists
-				return "redirect:/search/form?duplicate";
+				return "redirect:/search/compensation_history?duplicate";
 			}
 		}
 		else { //invalid birth date
-			return "redirect:/search/form?invalid";
+			return "redirect:/employee/{uid}/compensation_history?invalid";
 		}
 
 	}
 
 	
 	// ________view employee's compensation history_______
-	@RequestMapping(value = "/employee/{uid}/compensation_history", method = RequestMethod.GET)
+	@GetMapping("/employee/{uid}/compensation_history")
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations																			// each compensation
@@ -179,7 +179,7 @@ public class SystemsController {
 		return "compensation_history";
 	}
 	//________view employee's compensation details by month______
-	@RequestMapping("/employee/{uid}/compensation_details/{month}/{year}")
+	@GetMapping("/employee/{uid}/compensation_details/{month}/{year}")
 	public String viewDetails(@PathVariable int uid, @PathVariable String month, @PathVariable int year, Model model) {
 		List<Compensation> compensations = compService.findCompensationsByMonthname(uid, month, year); //get the month list
 		model.addAttribute("employee", emplService.getEmployeeById(uid)); //pass parameters to the model
@@ -200,7 +200,7 @@ public class SystemsController {
 	}
 	
 	// ________new compensation form_________________
-	@RequestMapping(value = "/employee/{uid}/new_compensation", method = RequestMethod.GET)
+	@GetMapping(value = "/employee/{uid}/new_compensation")
 	public String compensationForm(@PathVariable int uid, Model model) {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		Compensation comp = new Compensation();
@@ -223,7 +223,7 @@ public class SystemsController {
 		return "edit_compensation";
 	}
 	//_______update compensation______________
-	@RequestMapping("/employee/{uid}/edit_compensation/{id}/update")
+	@PostMapping("/employee/{uid}/edit_compensation/{id}/update")
 	public String editCompensation(@PathVariable int uid, @PathVariable int id, @ModelAttribute("compensation") Compensation comp, Model model) {
 		Compensation existingComp = compService.getCompensation(id);
 		existingComp.setId(comp.getId());

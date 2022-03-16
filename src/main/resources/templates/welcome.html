@@ -27,7 +27,7 @@
 		<!-- Alerts -->
 		<div class="alert alert-success" role="alert" th:if="${param.success}">Employee added successfully.</div>
 		<div class="alert alert-danger" role="alert"  th:if="${param.duplicate}">That employee already exists in the system.</div>
-		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a correct birth date, please.</div>
+		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
 		<div class="alert alert-danger" role="alert" th:text="${empty}" th:if="${empty}"></div>
 
 		<div class="cenefa">
