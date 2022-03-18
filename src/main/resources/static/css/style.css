@@ -1,0 +1,31 @@
+.g{
+	background-image: linear-gradient(to right, #306AE6 , #43979F);
+	width:auto;
+	height:200px;
+	color:white;
+	text-align: center;
+}
+
+.name{
+	font-weight:bold;
+	letter-spacing: 0.08em;
+}
+
+.welcome{
+	padding-top: 70px;
+	letter-spacing: 0.08em;
+	font-weight: lighter;
+	font-size: 2.8rem;
+}
+h1{
+	color:white;
+}
+
+body{
+	background-color: black;
+}
+
+button{
+	background-color: #245886;
+	
+}
