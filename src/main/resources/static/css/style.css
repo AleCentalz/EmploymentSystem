@@ -1,31 +1,80 @@
-.g{
-	background-image: linear-gradient(to right, #306AE6 , #43979F);
-	width:auto;
-	height:200px;
-	color:white;
-	text-align: center;
+/* VARIABLES */
+.root {
+	--btn-color: #245886;
 }
 
-.name{
+/* RULES */
+.title {
+	background-image: linear-gradient(to right, #306AE6 , #43979F);
+	color:white;
+	height:200px;
+	text-align: center;
+	width:auto;
+}
+.name {
 	font-weight:bold;
 	letter-spacing: 0.08em;
 }
-
-.welcome{
-	padding-top: 70px;
+.welcome {
 	letter-spacing: 0.08em;
+	padding-top: 70px;
 	font-weight: lighter;
 	font-size: 2.8rem;
 }
-h1{
-	color:white;
+h1 {
+	color:white
 }
-
-body{
-	background-color: black;
+body {
+	background-color: black
 }
-
-button{
+.my-btn {
 	background-color: #245886;
-	
+	color:white;
+	font-size: 1.3rem;
+	padding: 8px 16px;
+	font-family: 'Fira Sans', sans-serif;
+	text-decoration: none;
+	border: none;
+}
+.my-btn:hover {
+	background-color: #306EAB
+}
+i {
+	color: #245886
+}
+
+footer {
+	background-color: #F3F3F3;
+	bottom: 0;
+	color:#4b4c4d;
+	left: 0;
+	padding: 20px;
+	position:fixed;
+	text-align: center;
+	width: 100%;
+}
+.copyright {
+	color:#aaa;
+	font-size:13px;
+	margin-bottom:0;
+  	margin-top:15px;
+  	text-align:center;  
+}
+.my-form{
+	background-color: #F3F3F3;
+}
+
+/* SHAPES */
+#rectangle {
+  width: auto;
+  height: auto;
+  padding-left: 10px;
+  background: red;
+}
+#triangle-down {
+	width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 100px solid red;
 }

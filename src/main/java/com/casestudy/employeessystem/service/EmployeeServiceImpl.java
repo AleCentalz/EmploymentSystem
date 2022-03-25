@@ -44,12 +44,14 @@ public class EmployeeServiceImpl{
 
 	public Boolean exists(Employee empl) {
 		//get new employee data
+		//int uid = empl.getUid();
 		String fname = empl.getFirstName();
 		String mname = empl.getMiddleName();
 		String lname = empl.getLastName();
 		Date bday = empl.getBirthDate();
 		
 		Employee existedEmployee = (Employee) repo.findEmployeeByFirstNameAndMiddleNameAndLastNameAndBirthDate(fname, mname, lname, bday);
+		//int existedUid = existedEmployee.getUid();
 		
 		if(existedEmployee != null) {
 			System.out.println("ERROR, EMPLOYEE ALREADY EXISTS");

@@ -27,31 +27,31 @@
 		
 		<form th:action="@{/employee/{uid}/edit_compensation/{id}/update(uid=${employee.uid}, id=${compensation.id})}"
 			th:object="${compensation}" method="POST">
-			<div class="form-group">
+			<div class="form-group mb-4">
 				<label for="type">Type</label>
-				<select class="form-control" id="type" th:field="*{type}">
-					<option value="Adjustment">Adjustment</option>
-					<option value="Allowance">Allowance</option>
-					<option value="Bonus">Bonus</option>
-					<option value="Commision">Commision</option>
-					<option value="Salary">Salary</option>
+				<select class="form-control" id="type" th:field="*{type}" readonly>
+					<option disabled value="Adjustment">Adjustment</option>
+					<option disabled value="Allowance">Allowance</option>
+					<option disabled value="Bonus">Bonus</option>
+					<option disabled value="Commision">Commision</option>
+					<option disabled value="Salary">Salary</option>
 				</select>
 			</div>
-			<div class="form-group">
+			<div class="form-group mb-4">
 				<label for="amount">Amount</label>
 				<input type="number" class="form-control" id="amount" min="1" max="80000" th:field="*{amount}" required>
 			</div>
-			<div class="form-group">
+			<div class="form-group mb-4">
 				<label for="descriptiom">Description</label>
 				<textarea class="form-control" id="descriptiom" rows="3" th:field="*{description}"></textarea>
 				<small id="emailHelp" class="form-text text-muted">For Salary compensations, the description is optional.</small>
 			</div>
-			<div class="form-group">
+			<div class="form-group mb-4">
 				<label for="date">Date</label>
-				<input type="date" class="form-control" id="date" th:field="*{date}" required>
+				<input type="date" class="form-control" id="date" th:field="*{date}" readonly>
 			</div>
-			<button type="submit" class="btn btn-primary mb-2">Save</button>
-			<a class="btn btn-secondary mt-4" role="button"
+			<button type="submit" class="btn btn-primary">Save</button>
+			<a class="btn btn-secondary" role="button"
 				th:href="@{/employee/{uid}/compensation_details/{month}/{year}(uid=${employee.uid},month=${#dates.monthName(compensation.date)},year=${#dates.year(compensation.date)} )}"
 				href="#">Cancel</a>
 		</form>

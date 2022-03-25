@@ -18,6 +18,8 @@ public class User {
 	private String email;
 	@Column(name = "password", nullable = false, length = 45)
 	private String password;
+	
+	//Getters and Setters---------------------------
 	public long getId() {
 		return id;
 	}
@@ -42,7 +44,5 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-
-	
+		
 }

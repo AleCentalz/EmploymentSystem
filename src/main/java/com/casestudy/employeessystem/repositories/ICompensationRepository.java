@@ -24,7 +24,7 @@ public interface ICompensationRepository extends JpaRepository<Compensation, Int
 			+ "WHERE idEmployee = :idEmployee ORDER BY date asc", nativeQuery = true)
 	List <Compensation> findCompensationsByEmployeeId(@Param("idEmployee") int idEmployee);	*/
 
-	//find compensations grouped by year, month and totals
+	//find compensations grouped by year, month and totals of X employee
 	@Query(value="SELECT id, type, description, idEmployee, date, SUM(amount) as amount, MONTHNAME(date) as monthname, "
 			+ "YEAR(date) as yearname FROM Compensation WHERE idEmployee = :idEmployee "
 			+ "GROUP BY yearname, monthname ORDER by date asc", nativeQuery=true)

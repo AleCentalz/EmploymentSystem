@@ -146,7 +146,7 @@ public class SystemsController {
 		Employee existingEmpl = emplService.getEmployeeById(uid);
 
 		if (emplService.isValidBirthDate(bday)) {
-			if (emplService.exists(employee) != true) { //successfully added
+			if (emplService.exists(employee) != true) { 
 				existingEmpl.setUid(employee.getUid());
 				existingEmpl.setFirstName(employee.getFirstName()); // from the employee in the form, assign the data
 				existingEmpl.setLastName(employee.getLastName());
@@ -158,7 +158,7 @@ public class SystemsController {
 				return "redirect:/employee/{uid}/compensation_history?updateuser";
 			}
 			else { //error, that employee already exists
-				return "redirect:/search/compensation_history?duplicate";
+				return "redirect:/employee/{uid}/compensation_history?duplicate";
 			}
 		}
 		else { //invalid birth date
