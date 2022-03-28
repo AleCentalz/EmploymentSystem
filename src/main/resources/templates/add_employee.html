@@ -18,9 +18,9 @@
 	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="my-background">
 	<!-- Nav -->
-	<nav class="navbar navbar-light marked ">
+	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
 			<div id="">
 				<a class="navbar-brand name" href="/welcome"> Employment System </a>
@@ -34,44 +34,43 @@
 	<!-- End - Nav -->
 
 	<!-- Main Content -->
-	<main class="container">
-		<div class="text-center">
-			<i class="fa fa-solid fa-user"></i>
-			<h3 class="my-3">Add a new Employee to the System</h3>
-		</div>
+	<main class="container text-center">
+	
+			<h2 class="subtitle my-4">Add a new Employee to the System</h2>
+	
 
-		<div class="my-form col-6 container card">
+		<div class="my-form card mb-5">
 			<form th:action="@{/employee}" th:object="${employee}" method="POST">
 				
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="first-name" class="col-form-label">First name</label>
 						<input type="text" id="first-name" class="form-control" th:field="*{firstName}"
 							placeholder="Your Name" required>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="middle-name" class="col-form-label">Middle Name</label>
 						<input type="text" id="middle-name" class="form-control" th:field="*{middleName}"
 							placeholder="Your Middle Name">
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="last-name" class="col-form-label">Last name</label>
 						<input type="text" id="last-name" class="form-control" th:field="*{lastName}"
 							placeholder="Your Last Name" required>
 					</div>
 
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="position" class="col-form-label">Position</label>
 						<input type="text" id="position" class="form-control" th:field="*{position}"
 							placeholder="Your Position" required>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group">
 						<label for="birh-date" class="col-form-label">Birth date</label>
 						<input type="date" id="birth-date" class="form-control" th:field="*{birthDate}" required>
 					</div>
 
 				
-				<button type="submit" class="btn btn-primary mt-4 col-md-2">Add Employee</button>
-				<a class="btn btn-secondary mt-4 col-md-2" role="button" href="/welcome">Cancel</a>
+				<button type="submit" class="my-btn mt-4 ">Add Employee</button>
+				<button class="my-btn-sc mt-4 col-md-2" onclick="window.location.href='/welcome'">Cancel</button>
 			</form>
 
 		</div>

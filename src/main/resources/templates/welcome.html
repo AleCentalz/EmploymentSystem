@@ -21,7 +21,7 @@
 
 <body>
 	<!-- Nav -->
-	<nav class="navbar navbar-light marked ">
+	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
 			<div id="">
 				<a class="navbar-brand name" href="/welcome"> Employment System </a>
@@ -49,6 +49,8 @@
 			system.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
 		<div class="alert alert-danger" role="alert" th:text="${empty}" th:if="${empty}"></div>
+		<!-- End-Alerts -->
+		
 		<!-- Menu -->
 		<div class="row">
 			<p class="fw-light mb-5"><em>Please, select one option</em></p>
@@ -59,33 +61,26 @@
 			</div>
 		</div>
 		<!-- Cards -->
-		<div class="card-group">
+		<div class="my-card card-group">
 			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
+				<img class="my-card-img card-img-top" th:src="@{/img/Employees.jpg}" alt="Working team">
 				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-						additional content. This content is a little bit longer.</p>
-					<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+					<h5 class="card-title">Add your employees</h5>
+					<p class="card-text">You can add your employee to the system in a easy and effective way.</p>
 				</div>
 			</div>
 			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
+				<img class="my-card-img card-img-top" th:src="@{/img/Money.jpg}" alt="Money in a desk">
 				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-					</p>
-					<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+					<h5 class="card-title">Register compensations</h5>
+					<p class="card-text">Upload your employee's compensations like salary, bonus, commisions, adjustments or allowances!</p>
 				</div>
 			</div>
 			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
+				<img class="my-card-img card-img-top" th:src="@{/img/Charts.jpg}" alt="Charts in a paper">
 				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-						additional content. This card has even longer content than the first to show that equal height
-						action.</p>
-					<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+					<h5 class="card-title">View compensation history</h5>
+					<p class="card-text">Commisions will be presenten by year and months with a total.</p>
 				</div>
 			</div>
 		</div>

@@ -5,23 +5,37 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Search for an Employee</title>
+	<!-- my style sheet -->
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<!-- Font Awesome for icons -->
+	<script src="https://kit.fontawesome.com/cf8f2989e3.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap style sheet -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 
-<body>
-	<nav class="navbar navbar-dark bg-dark">
+<body class="my-background">
+	<!-- Nav -->
+	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/welcome">
-				Employment System
-			</a>
+			<div id="">
+				<a class="navbar-brand name" href="/welcome"> Employment System </a>
+			</div>
+			<div id=""></div>
 			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-secondary btn-sm" type="submit" value="Sign Out" />
+				<button class="btn" type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
 			</form>
 		</div>
 	</nav>
-	<div class="container">
-		<h3 class="my-3">Search for an Employee</h3>
+	<!-- End - Nav -->
+
+	<!-- Main -->
+	<main class="container">
+		<h2 class="subtitle my-3">Search for an Employee</h2>
 		<div class="row mt-2">
 
 			<!-- Search form -->
@@ -33,13 +47,13 @@
 						th:value="${lastName}" name="lname">
 					<input class="form-control me-3" type="search" placeholder="Position" aria-label="position"
 						th:value="${position}" name="pos">
-					<button class="btn btn-success me-3" type="submit">Search</button>
-					<button class="btn btn-secondary me-3" type="clear">Clean</button>
+					<button class="my-btn me-3" type="submit">Search</button>
+					<button class="my-btn-sc me-3" type="clear">Clean</button>
 				</form>
 
 				<!-- Search results -->
 				<table class="table">
-					<thead class="thead-dark">
+					<thead>
 						<tr>
 							<th scope="col">UID</th>
 							<th scope="col">First name</th>
@@ -59,11 +73,11 @@
 							<td th:text="${employee.birthDate}"></td>
 							<td>
 								<a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}"
-									class="btn btn-outline-primary btn-sm">Edit</a>
+									class="my-btn-sc btn-sm">Edit</a>
 							</td>
 							<td>
 								<a th:href="@{/employee/{uid}/compensation_history(uid=${employee.uid})}"
-									class="btn btn-primary btn-sm">Compensations</a>
+									class="my-btn btn-sm">Compensations</a>
 							</td>
 						</tr>
 					</tbody>
@@ -71,7 +85,13 @@
 
 			</div>
 		</div>
-	</div>
+	</main>
+	
+	<!-- footer -->
+	<footer style="position: fixed;">
+		<p class="copyright">Employment System © 2022</p>
+	</footer>
+	<!-- End - footer -->
 </body>
 
 </html>
