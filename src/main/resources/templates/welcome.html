@@ -24,7 +24,7 @@
 	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
 			<div id="">
-				<a class="navbar-brand name" href="/welcome"> Employment System </a>
+				<a class="navbar-brand sistem-name" href="/welcome"> Employment System </a>
 			</div>
 			<div id=""></div>
 			<form th:action="@{/logout}" method="post">
@@ -55,29 +55,29 @@
 		<div class="row">
 			<p class="fw-light mb-5"><em>Please, select one option</em></p>
 
-			<div class="col my-4">
-				<button onclick="window.location.href='/employee/add'" class="my-btn me-5">Add an employee</button>
+			<div class="col menu">
+				<button onclick="window.location.href='/employee/add'" class="my-btn">Add an employee</button>
 				<button onclick="window.location.href='/search/form'" class="my-btn">Search an employee</button>
 			</div>
 		</div>
 		<!-- Cards -->
 		<div class="my-card card-group">
 			<div class="card">
-				<img class="my-card-img card-img-top" th:src="@{/img/Employees.jpg}" alt="Working team">
+				<img class="card-img-top" th:src="@{/img/Employees.jpg}" alt="Working team">
 				<div class="card-body">
 					<h5 class="card-title">Add your employees</h5>
 					<p class="card-text">You can add your employee to the system in a easy and effective way.</p>
 				</div>
 			</div>
 			<div class="card">
-				<img class="my-card-img card-img-top" th:src="@{/img/Money.jpg}" alt="Money in a desk">
+				<img class="card-img-top" th:src="@{/img/Money.jpg}" alt="Money in a desk">
 				<div class="card-body">
 					<h5 class="card-title">Register compensations</h5>
 					<p class="card-text">Upload your employee's compensations like salary, bonus, commisions, adjustments or allowances!</p>
 				</div>
 			</div>
 			<div class="card">
-				<img class="my-card-img card-img-top" th:src="@{/img/Charts.jpg}" alt="Charts in a paper">
+				<img class="card-img-top" th:src="@{/img/Charts.jpg}" alt="Charts in a paper">
 				<div class="card-body">
 					<h5 class="card-title">View compensation history</h5>
 					<p class="card-text">Commisions will be presenten by year and months with a total.</p>

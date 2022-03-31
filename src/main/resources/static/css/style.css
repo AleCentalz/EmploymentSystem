@@ -1,6 +1,9 @@
 /* VARIABLES */
 .root {
-	--btn-color: #245886;
+	--dark-blue: #245886;
+	--light-blue:#306AE6;
+	--gray:#F3F3F3;
+	--green:#43979F;
 }
 
 /* RULES */
@@ -10,20 +13,6 @@
 	height:auto;
 	text-align: center;
 	width:auto;
-}
-.my-background {
-	background-image: linear-gradient(to right, #306AE6, #43979F);
-}
-.landing-background{
-	background: url("../img/Background-2.png") no-repeat center center fixed; 
-}
-
-.landing-content{
-	margin-top:150px;
-}
-.name {
-	font-weight:bold;
-	letter-spacing: 0.08em;
 }
 .welcome {
 	letter-spacing: 0.08em;
@@ -37,13 +26,28 @@
 	color:white;
 	font-weight: normal;
 	letter-spacing: 0.03em;
+	margin-top:2rem;
 }
-label {
+.my-background {
+	background-image: linear-gradient(to right, #306AE6, #43979F);
+}
+.landing-background{
+	background: url("../img/Background-2.png") no-repeat center center fixed; 
+}
+.landing-content{
+	margin-top:150px;
+}
+.sistem-name {
 	font-weight:bold;
-	color:#4b4c4d;
+	letter-spacing: 0.08em;
 }
-body {
-	background-color: black
+.menu button{
+	display:inline-block;
+	margin-right: 20px;
+	margin-top:10px;
+}
+.menu button:last-child{
+	margin-right:0;
 }
 .my-btn {
 	background-color: #245886;
@@ -54,6 +58,9 @@ body {
 	text-decoration: none;
 	border: none;
 }
+.my-btn-sc:hover i {
+	color:white;
+}
 .my-btn-sc {
 	background-color: #F3F3F3;
 	color: #232323;
@@ -63,15 +70,70 @@ body {
 	text-decoration: none;
 	border: none;
 }
-.my-btn:hover,.my-btn-sc:hover {
+.sm{
+	font-size: 1rem;
+	padding: 5px 9px;
+}
+.my-btn:hover,.my-btn-sc:hover, .my-btn-sm:hover {
 	background-color: #306EAB;
 	color:white;
 }
-
-i {
-	color: #245886
+.my-card{
+	margin-top: 100px;
+	margin-bottom:100px;
 }
-
+.month a{
+	color:#306EAB;
+	text-decoration: none;
+	font-weight: 500;
+}
+.month a:hover{
+	color:#306AE6;
+}
+.profile-menu{
+	padding-left: 45px;
+	display:flex;
+	flex-direction: column;
+}
+.information{
+	display:flex;
+	flex-direction: row;
+}
+.btn-search{
+	position:absolute;
+	right:75;
+}
+.name-position{
+	margin-left: 30px;
+	margin-right: 20px;
+}
+.card{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.search-menu{
+	display:flex;
+	align-items: baseline;
+	justify-content: space-between;
+}
+h4,h6{
+	color:white;
+}
+label, .head {
+	font-weight:bold;
+	color:#4b4c4d;
+}
+i {
+	color: #245886;
+}
+th, td{
+	color:#232323;
+}
+body{
+	position:relative;
+}
+p{
+	font-size:1.15rem;
+}
 footer {
 	background-color: #F3F3F3;
 	bottom: 0;
@@ -88,18 +150,10 @@ footer {
   	margin-top:15px;
   	text-align:center;  
 }
-.my-form{
-	background-color: #F3F3F3;
-}
-.my-card{
-	margin-top: 100px;
-	margin-bottom:100px;
-}
-.my-card-img{
-	width:362px;
-	height:265px;
-}
 
+#uid{
+	color:#306EAB;
+}
 /* SHAPES */
 #rectangle {
   width: auto;

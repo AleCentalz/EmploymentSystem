@@ -23,7 +23,7 @@
 	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
 			<div id="">
-				<a class="navbar-brand name" href="/welcome"> Employment System </a>
+				<a class="navbar-brand sistem-name" href="/welcome"> Employment System </a>
 			</div>
 			<div id=""></div>
 			<form th:action="@{/logout}" method="post">
@@ -34,45 +34,40 @@
 	<!-- End - Nav -->
 
 	<!-- Main Content -->
-	<main class="container text-center">
-	
-			<h2 class="subtitle my-4">Add a new Employee to the System</h2>
-	
+	<main class="container">
+		<header class="text-center">
+			<h2 class="subtitle">Add a new Employee to the System</h2>
+		</header>
 
-		<div class="my-form card mb-5">
+		<div class="col-lg-6 col-10 container card mb-5">
 			<form th:action="@{/employee}" th:object="${employee}" method="POST">
-				
-					<div class="form-group">
-						<label for="first-name" class="col-form-label">First name</label>
-						<input type="text" id="first-name" class="form-control" th:field="*{firstName}"
-							placeholder="Your Name" required>
-					</div>
-					<div class="form-group">
-						<label for="middle-name" class="col-form-label">Middle Name</label>
-						<input type="text" id="middle-name" class="form-control" th:field="*{middleName}"
-							placeholder="Your Middle Name">
-					</div>
-					<div class="form-group">
-						<label for="last-name" class="col-form-label">Last name</label>
-						<input type="text" id="last-name" class="form-control" th:field="*{lastName}"
-							placeholder="Your Last Name" required>
-					</div>
+				<div class="form-group-row mx-5 mb-4">
+					<label for="first-name" class="col-form-label mt-3">First name</label>
+					<input type="text" id="first-name" class="form-control" th:field="*{firstName}"
+						placeholder="Your Name" required>
 
-					<div class="form-group">
-						<label for="position" class="col-form-label">Position</label>
-						<input type="text" id="position" class="form-control" th:field="*{position}"
-							placeholder="Your Position" required>
-					</div>
-					<div class="form-group">
-						<label for="birh-date" class="col-form-label">Birth date</label>
-						<input type="date" id="birth-date" class="form-control" th:field="*{birthDate}" required>
-					</div>
+					<label for="middle-name" class="col-form-label">Middle Name</label>
+					<input type="text" id="middle-name" class="form-control" th:field="*{middleName}"
+						placeholder="Your Middle Name">
 
-				
-				<button type="submit" class="my-btn mt-4 ">Add Employee</button>
-				<button class="my-btn-sc mt-4 col-md-2" onclick="window.location.href='/welcome'">Cancel</button>
+					<label for="last-name" class="col-form-label">Last name</label>
+					<input type="text" id="last-name" class="form-control" th:field="*{lastName}"
+						placeholder="Your Last Name" required>
+
+					<label for="position" class="col-form-label">Position</label>
+					<input type="text" id="position" class="form-control" th:field="*{position}"
+						placeholder="Your Position" required>
+
+					<label for="birh-date" class="col-form-label">Birth date</label>
+					<input type="date" id="birth-date" class="form-control" th:field="*{birthDate}" required>
+				</div>
+
+				<div class="text-center menu mb-4 ">
+					<button class="my-btn" type="submit" >Add Employee</button>
+					<button class="my-btn-sc" onclick="window.location.href='/welcome'">Cancel</button>
+				</div>
+
 			</form>
-
 		</div>
 	</main>
 
@@ -81,7 +76,6 @@
 		<p class="copyright">Employment System © 2022</p>
 	</footer>
 	<!-- End - footer -->
-
 
 </body>
 

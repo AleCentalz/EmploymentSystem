@@ -41,7 +41,11 @@ public class CompensationServiceImpl {
 
 	// Get the total of all the compensations of X employee
 	public Float getTotal(int idEmployee) {
-		return repo.getTotal(idEmployee);
+		float total =  repo.getTotal(idEmployee);
+		if(total != 0.0f) {
+			return total;
+		}
+		return 0.0f;
 	}
 
 	// Find the compensations by a range of dates
@@ -52,8 +56,6 @@ public class CompensationServiceImpl {
 		java.util.Date date2 = sdf.parse(eDate);
 		java.sql.Date startDate = new Date(date1.getTime());
 		java.sql.Date endDate = new Date(date2.getTime());
-		System.out.println(endDate);
-		System.out.println(startDate);
 
 		// review dates entries to avoid errors
 		return repo.findCompensationByDate(startDate, endDate);

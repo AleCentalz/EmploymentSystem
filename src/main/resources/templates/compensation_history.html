@@ -5,108 +5,133 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Compensation History</title>
+	<!-- my style sheet -->
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<!-- Font Awesome for icons -->
+	<script src="https://kit.fontawesome.com/cf8f2989e3.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap style sheet -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link href="css/style.css" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<nav class="navbar navbar-dark bg-dark">
+	<!-- Nav -->
+	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/welcome">
-				Employment System
-			</a>
+			<div id="">
+				<a class="navbar-brand sistem-name" href="/welcome"> Employment System </a>
+			</div>
+			<div id=""></div>
 			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-secondary btn-sm" type="submit" value="Sign Out" />
+				<button class="btn" type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
 			</form>
 		</div>
 	</nav>
-	<div class="container">
+	<!-- End - Nav -->
 
-		<h1><span th:text="${employee.firstName}"></span>'s Compensation history</h1>
-
-		<!-- Employee's alerts -->
-		<div class="alert alert-success" role="alert" th:if="${param.updateuser}">Employee updated successfully.</div>
-		<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">The information of that employee already
-			exists.</div>
-		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
-
-		<div class="row my-4">
-			<div class="col-1"> <img src="/img/profile-pic.jpg" alt="employee's profile photo" width="80" height="80">
+	<!-- Main content -->
+	<!-- Profle information -->
+	<div class="my-background p-4 mb-4">
+		<div class="profile-menu">
+			<h2 class="subtitle"><span th:text="${employee.firstName}"></span>'s Compensation history</h2>
+			<div class="information">
+				<img src="/img/Profile-pic.png" alt="Profile picture" width="80px" height="80px"></img>
+				<div class="name-position">
+					<h4 th:text="${employee.firstName} + ' ' + ${employee.middleName} + ' ' + ${employee.lastName}">
+					</h4>
+					<h6 th:text="${employee.position}"></h6>
+				</div>
+				<div class="mt-4"><a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}" class="my-btn sm">Edit</a>
+				</div>
+				<div class="mt-4 btn-search"><a href="/search/form" class="my-btn-sc" role="button">Back to search</a>
+				</div>
 			</div>
-			<div class="col">
-				<h4 th:text="${employee.firstName} + ' ' + ${employee.middleName} + ' ' + ${employee.lastName}"></h4>
-				<h6 th:text="${employee.position}"></h6>
-			</div>
-			<div class="col">
-				<a th:href="@{/employee/{uid}/edit(uid=${employee.uid})}"
-					class="btn btn-outline-primary btn-sm">Edit</a>
-			</div>
-			<div class="col">
-				<a href="/search/form" class="btn btn-outline-secondary" role="button">Back to search</a>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col">
-				<form th:action="@{/employee/{uid}/compensation_history/search(uid=${employee.uid})}" class="d-flex"
-					method="GET">
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="inputGroup-sizing-sm">Start date</span>
-						</div>
-						<input type="month" name="sDate" min="1970-01" value="2022-12" max="2023-12"
-							class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-					</div>
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="inputGroup-sizing-sm">End date</span>
-						</div>
-						<input type="month" name="eDate" min="1970-01" value="2022-12" max="2023-12"
-							class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-					</div>
-					<button class="btn btn-secondary btn-sm mb-3" type="submit">Search</button>
-				</form>
-			</div>
-			<div class="col">
-				<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="btn btn-primary"
-					role="button">Add a new compensation</a>
-			</div>
-		</div>
-			
-		<div class="row">
-			<table class="table">
-				<thead class="text-center">
-					<tr class="table-secondary">
-						<th colspan="3">Compensation History</th>
-					</tr>
-				</thead>
-				<thead>
-					<tr>
-						<th>Year</th>
-						<th>Month</th>
-						<th>Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="compensation : ${listComp}">
-						<th th:text="${#dates.year(compensation.date)}" scope="row"></th>
-						<td> <a th:href="@{/employee/{uid}/compensation_details/{month}/{year}(uid=${employee.uid},month=${#dates.monthName(compensation.date)},year=${#dates.year(compensation.date)} )}"
-								href="#" th:text="${#dates.monthName(compensation.date)}"></a> </td>
-						<!-- Send to a new template to view compensations by that month-->
-						<td th:text="'$' + ${compensation.amount}"></td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr class="table-dark">
-						<th scope="row">Total</th> <!-- Total doesnt update with the history results -->
-						<td colspan="2" th:text="${total}"></td>
-					</tr>
-				</tfoot>
-			</table>
 		</div>
 
 	</div>
+
+	<main class="container">
+		<!-- Employee's alerts -->
+		<div class="alert alert-success" role="alert" th:if="${param.updateuser}">Employee updated successfully.
+		</div>
+		<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">The information of that employee already
+			exists.</div>
+		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
+		<div class="alert alert-warning" role="alert" th:if="${param.null}">Dates entered exceed the record</div>
+		<!-- Date search menu -->
+
+		<div class="search-menu">
+			<form th:action="@{/employee/{uid}/compensation_history/search(uid=${employee.uid})}" class="d-flex"
+				method="GET">
+				<div class="input-group input-group-sm mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-sm"
+							style="background-color: #F3F3F3;">Start date</span>
+					</div>
+					<input type="month" name="sDate" min="1970-01" value="2022-12" max="2023-12" class="form-control"
+						aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+				</div>
+
+				<div class="input-group input-group-sm mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #F3F3F3;">End
+							date</span>
+					</div>
+					<input type="month" name="eDate" min="1970-01" value="2022-12" max="2023-12" class="form-control"
+						aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+				</div>
+
+				<button class="my-btn-sc sm mb-3" type="submit">Search</button>
+			</form>
+
+			<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="my-btn">Add a new
+				compensation</a>
+		</div>
+
+		<table class="table mb-5">
+			<thead class="text-center">
+				<tr class="table-secondary">
+					<th class="h5" colspan="3" style="background-color: #F3F3F3;">
+						Compensation History
+					</th>
+				</tr>
+			</thead>
+			<thead>
+				<tr>
+					<th>Year</th>
+					<th>Month</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="compensation : ${listComp}">
+					<th th:text="${#dates.year(compensation.date)}" scope="row"></th>
+					<td class="month"><a
+							th:href="@{/employee/{uid}/compensation_details/{month}/{year}(uid=${employee.uid},month=${#dates.monthName(compensation.date)},year=${#dates.year(compensation.date)} )}"
+							href="#" th:text="${#dates.monthName(compensation.date)}"></a> </td>
+					<!-- Send to a new template to view compensations by that month-->
+					<td th:text="'$' + ${compensation.amount}"></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th class="h5" scope="row">Total</th> <!-- Total doesnt update with the history results -->
+					<td></td>
+					<td class="head h5" th:text="'$' + ${total}"></td>
+				</tr>
+			</tfoot>
+		</table>
+	</main>
+
+	<!-- footer -->
+	<footer style="position: fixed;">
+		<p class="copyright">Employment System © 2022</p>
+	</footer>
+	<!-- End - footer -->
 </body>
 
 </html>
