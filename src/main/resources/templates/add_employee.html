@@ -41,29 +41,33 @@
 
 		<div class="col-lg-6 col-10 container card mb-5">
 			<form th:action="@{/employee}" th:object="${employee}" method="POST">
-				<div class="form-group-row mx-5 mb-4">
+				<div class="form-group-row mx-5 my-2">
 					<label for="first-name" class="col-form-label mt-3">First name</label>
 					<input type="text" id="first-name" class="form-control" th:field="*{firstName}"
 						placeholder="Your Name" required>
-
+				</div>
+				<div class="form-group row mx-5 mb-2">
 					<label for="middle-name" class="col-form-label">Middle Name</label>
 					<input type="text" id="middle-name" class="form-control" th:field="*{middleName}"
 						placeholder="Your Middle Name">
-
+				</div>
+				<div class="form-group row mx-5 mb-2">
 					<label for="last-name" class="col-form-label">Last name</label>
 					<input type="text" id="last-name" class="form-control" th:field="*{lastName}"
 						placeholder="Your Last Name" required>
-
+				</div>
+				<div class="form-group row mx-5 mb-2">
 					<label for="position" class="col-form-label">Position</label>
 					<input type="text" id="position" class="form-control" th:field="*{position}"
 						placeholder="Your Position" required>
-
+				</div>
+				<div class="form-group row mx-5 mb-4">
 					<label for="birh-date" class="col-form-label">Birth date</label>
 					<input type="date" id="birth-date" class="form-control" th:field="*{birthDate}" required>
 				</div>
 
-				<div class="text-center menu mb-4 ">
-					<button class="my-btn" type="submit" >Add Employee</button>
+				<div class="text-center menu">
+					<button class="my-btn" type="submit">Add Employee</button>
 					<button class="my-btn-sc" onclick="window.location.href='/welcome'">Cancel</button>
 				</div>
 

@@ -18,7 +18,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 
-<body class="">
+<body>
 	<!-- Nav -->
 	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid">
@@ -33,11 +33,13 @@
 	</nav>
 	<!-- End - Nav -->
 
-	<div class="text-center my-background p-4 mb-4">
-		<h1 class="subtitle">Compensation Breakdown of <span th:text="${month}"></span> <span th:text="${year}"></span>
+	<!-- Main content -->
+	<header class="text-center my-background p-4">
+		<h1 class="subtitle">Compensation Breakdown of <span th:text="${month}"></span>
+			<span th:text="${year}"></span>
 		</h1>
-	</div>
-
+	</header>
+	<!-- Table of compensations -->
 	<main class="container">
 		<table class="table table-stripedt mb-5">
 			<thead class="text-center">
@@ -54,23 +56,24 @@
 						<p><span th:text="${compensation.date}"></span></p>
 					</td>
 					<td>
-						<a class="my-btn-sc sm" th:href="@{/employee/{uid}/edit_compensation/{id}(uid=${employee.uid}, id=${compensation.id})}"><i class="fas fa-solid fa-pen"></i></a>
+						<div class="mt-5"><a class="my-btn-sc sm"
+							th:href="@{/employee/{uid}/edit_compensation/{id}(uid=${employee.uid}, id=${compensation.id})}">
+							<i class="fas fa-solid fa-pen"></i>
+						</a> </div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-
-
+		<!-- Buttons -->
 		<div class="text-center mb-5">
 			<a th:href="@{/employee/{uid}/compensation_history(uid=${employee.uid})}" class="my-btn"
 				role="button">Select another month</a>
 			<a href="/welcome" class="my-btn-sc" role="button">Home page</a>
 		</div>
-
 	</main>
 
 	<!-- footer -->
-	<footer style="position: fixed;">
+	<footer>
 		<p class="copyright">Employment System © 2022</p>
 	</footer>
 	<!-- End - footer -->

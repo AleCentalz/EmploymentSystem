@@ -3,6 +3,7 @@ package com.casestudy.employeessystem.service;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -36,7 +37,12 @@ public class CompensationServiceImpl {
 
 	// Find the compensations of X employee
 	public List<Compensation> findCompensationsByEmployeeId(int idEmployee) {
-		return repo.findCompensationsByEmployeeId(idEmployee);
+		List<Compensation> listCompensations = repo.findCompensationsByEmployeeId(idEmployee);
+		List<Compensation> emptylist = new ArrayList<Compensation>();
+		if(listCompensations != null) {
+			return listCompensations;
+		}
+		return emptylist;
 	}
 
 	// Get the total of all the compensations of X employee

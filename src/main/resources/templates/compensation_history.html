@@ -33,9 +33,8 @@
 	</nav>
 	<!-- End - Nav -->
 
-	<!-- Main content -->
 	<!-- Profle information -->
-	<div class="my-background p-4 mb-4">
+	<header class="my-background p-4 mb-4">
 		<div class="profile-menu">
 			<h2 class="subtitle"><span th:text="${employee.firstName}"></span>'s Compensation history</h2>
 			<div class="information">
@@ -51,10 +50,9 @@
 				</div>
 			</div>
 		</div>
-
-	</div>
-
-	<main class="container">
+	</header>
+	<!-- Main content -->
+	<main class="container mb-5">
 		<!-- Employee's alerts -->
 		<div class="alert alert-success" role="alert" th:if="${param.updateuser}">Employee updated successfully.
 		</div>
@@ -62,8 +60,8 @@
 			exists.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.null}">Dates entered exceed the record</div>
-		<!-- Date search menu -->
 
+		<!-- Date search menu -->
 		<div class="search-menu">
 			<form th:action="@{/employee/{uid}/compensation_history/search(uid=${employee.uid})}" class="d-flex"
 				method="GET">
@@ -91,8 +89,8 @@
 			<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="my-btn">Add a new
 				compensation</a>
 		</div>
-
-		<table class="table mb-5">
+		<!-- Compensations table by year and month -->
+		<table class="table">
 			<thead class="text-center">
 				<tr class="table-secondary">
 					<th class="h5" colspan="3" style="background-color: #F3F3F3;">
@@ -128,7 +126,7 @@
 	</main>
 
 	<!-- footer -->
-	<footer style="position: fixed;">
+	<footer>
 		<p class="copyright">Employment System © 2022</p>
 	</footer>
 	<!-- End - footer -->

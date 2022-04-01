@@ -167,13 +167,20 @@ public class SystemsController {
 	// ________view employee's compensation history_______
 	@GetMapping("/employee/{uid}/compensation_history")
 	public String viewCompensation(@PathVariable int uid, Model model) {
-		model.addAttribute("employee", emplService.getEmployeeById(uid));
-		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations
-																							// // each compensation
-		Float total = compService.getTotal(uid); // get total
-		model.addAttribute("listComp", compensations);
-		System.out.println(total);
-		model.addAttribute("total", total);
+		try {
+			model.addAttribute("employee", emplService.getEmployeeById(uid));
+			List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations each compensation
+			Float total = compService.getTotal(uid); // get total
+			if(total != null) { //not applying
+				model.addAttribute("total", total);
+			}
+			else {
+				model.addAttribute("total", 0);
+			}
+			model.addAttribute("listComp", compensations);
+		} catch (Exception e) {
+			e.printStackTrace(); //cant see the error :/
+		}
 		return "compensation_history";
 	}
 
@@ -233,11 +240,8 @@ public class SystemsController {
 	public String editCompensation(@PathVariable int uid, @PathVariable int id,
 			@ModelAttribute("compensation") Compensation comp, Model model) {
 		Compensation existingComp = compService.getCompensation(id);
-		existingComp.setId(comp.getId());
-		existingComp.setType(comp.getType());
 		existingComp.setAmount(comp.getAmount());
 		existingComp.setDescription(comp.getDescription());
-		existingComp.setDate(comp.getDate());
 
 		compService.updateCompensation(existingComp);
 		return "redirect:/employee/{uid}/compensation_history?updated";
