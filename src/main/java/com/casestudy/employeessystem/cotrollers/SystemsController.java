@@ -169,17 +169,12 @@ public class SystemsController {
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		try {
 			model.addAttribute("employee", emplService.getEmployeeById(uid));
-			List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations each compensation
+			List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations
 			Float total = compService.getTotal(uid); // get total
-			if(total != null) { //not applying
-				model.addAttribute("total", total);
-			}
-			else {
-				model.addAttribute("total", 0);
-			}
+			model.addAttribute("total", total);
 			model.addAttribute("listComp", compensations);
 		} catch (Exception e) {
-			e.printStackTrace(); //cant see the error :/
+			e.printStackTrace();
 		}
 		return "compensation_history";
 	}
@@ -201,7 +196,9 @@ public class SystemsController {
 	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid)
 			throws ParseException {
 		model.addAttribute("employee", emplService.getEmployeeById(uid)); // send the employee
-		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate); // get the list of compensations by dates
+		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate); // get the list of
+																								// compensations by
+																								// dates
 		model.addAttribute("listComp", compensations);
 		return "compensation_history";
 
@@ -244,7 +241,7 @@ public class SystemsController {
 		existingComp.setDescription(comp.getDescription());
 
 		compService.updateCompensation(existingComp);
-		return "redirect:/employee/{uid}/compensation_history?updated";
+		return "redirect:/employee/{uid}/compensation_history?updatecompensation";
 	}
 
 	// DB error

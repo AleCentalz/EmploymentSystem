@@ -38,20 +38,18 @@ public class CompensationServiceImpl {
 	// Find the compensations of X employee
 	public List<Compensation> findCompensationsByEmployeeId(int idEmployee) {
 		List<Compensation> listCompensations = repo.findCompensationsByEmployeeId(idEmployee);
-		List<Compensation> emptylist = new ArrayList<Compensation>();
-		if(listCompensations != null) {
-			return listCompensations;
-		}
-		return emptylist;
+		//List<Compensation> emptylist = new ArrayList<Compensation>();
+		return listCompensations;
 	}
 
 	// Get the total of all the compensations of X employee
-	public Float getTotal(int idEmployee) {
+	public Float getTotal(int idEmployee){
 		float total =  repo.getTotal(idEmployee);
 		if(total != 0.0f) {
 			return total;
+		}else {
+			return 0.0f;
 		}
-		return 0.0f;
 	}
 
 	// Find the compensations by a range of dates

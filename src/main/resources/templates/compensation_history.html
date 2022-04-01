@@ -54,8 +54,8 @@
 	<!-- Main content -->
 	<main class="container mb-5">
 		<!-- Employee's alerts -->
-		<div class="alert alert-success" role="alert" th:if="${param.updateuser}">Employee updated successfully.
-		</div>
+		<div class="alert alert-success" role="alert" th:if="${param.updateuser}">Employee updated successfully.</div>
+		<div class="alert alert-success" role="alert" th:if="${param.updatecompensation}">Compensation updated succesfully.</div>
 		<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">The information of that employee already
 			exists.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
