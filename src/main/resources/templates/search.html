@@ -46,8 +46,8 @@
 					th:value="${lastName}" name="lname">
 				<input class="form-control me-3" type="search" placeholder="Position" aria-label="position"
 					th:value="${position}" name="pos">
-				<button class="my-btn me-3" type="submit">Search</button>
-				<button class="my-btn-sc me-3" type="clear">Clean</button>
+				<button class="my-btn me-3" type="submit" th:text="Search"></button>
+				<button class="my-btn-sc me-3" type="clear" th:text="Clean"></button>
 			</form>
 		</div>
 	</header>

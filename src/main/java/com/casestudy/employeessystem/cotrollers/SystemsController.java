@@ -198,14 +198,16 @@ public class SystemsController {
 	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid)
 			throws ParseException {
 		model.addAttribute("employee", emplService.getEmployeeById(uid)); // send the employee
-		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate, uid); // get the list of
-																									// compensations by
-																									// dates
+		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate, uid); // get the list of compensations by dates
 		model.addAttribute("listComp", compensations);
 		Float total = compService.getTotal(compensations);
 		model.addAttribute("total", total);
-		return "compensation_history";
-
+		if (total != 0) {
+			return "compensation_history";
+		}else {
+			model.addAttribute("warning", "0 compensations to show.");
+			return "compensation_history";
+		}
 	}
 
 	// ________new compensation form_________________
