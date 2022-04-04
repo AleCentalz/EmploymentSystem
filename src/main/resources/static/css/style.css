@@ -160,6 +160,10 @@ footer {
 #uid{
 	color:#306EAB;
 }
+#warning{
+	color:firebrick;
+	padding-bottom:15px;
+}
 /* SHAPES */
 #rectangle {
   width: auto;

@@ -60,7 +60,6 @@
 			exists.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.null}">Dates entered exceed the record.</div>
-		<div class="alert alert-danger" role="alert" th:if="${param.empty}">There are not compensations to show.</div>
 
 		<!-- Date search menu -->
 		<div class="search-menu">
@@ -90,7 +89,10 @@
 			<a th:href="@{/employee/{uid}/new_compensation(uid=${employee.uid})}" class="my-btn">Add a new
 				compensation</a>
 		</div>
+		
 		<!-- Compensations table by year and month -->
+		<h3 th:text="${warning}" class="text-center" id="warning"></h3>
+
 		<table class="table">
 			<thead class="text-center">
 				<tr class="table-secondary">

@@ -175,7 +175,8 @@ public class SystemsController {
 		if (globalTotal != 0) {
 			return "compensation_history";
 		}else {
-			return "redirect:/employee/{uid}/compensation_history?empty";
+			model.addAttribute("warning", "0 compensations to show.");
+			return "compensation_history";
 		}
 
 	}
