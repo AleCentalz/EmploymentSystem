@@ -4,10 +4,8 @@ _Case Study about a system for employees._
 
 ### Requeriments
 
-- An IDE for running Maven projects (Spring Boot Suite, Eclipse, IntelliJ,...).
+- An IDE for running Maven projects with Spring Framework (Spring Boot Suite, Eclipse, IntelliJ,...).
 - MySQL Workbrench.
-
----
 
 ## Instructions for running locally
 
