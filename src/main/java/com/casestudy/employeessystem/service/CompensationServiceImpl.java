@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -38,22 +39,22 @@ public class CompensationServiceImpl {
 	// Find the compensations of X employee
 	public List<Compensation> findCompensationsByEmployeeId(int idEmployee) {
 		List<Compensation> listCompensations = repo.findCompensationsByEmployeeId(idEmployee);
-		//List<Compensation> emptylist = new ArrayList<Compensation>();
+		// List<Compensation> emptylist = new ArrayList<Compensation>();
 		return listCompensations;
 	}
 
-	// Get the total of all the compensations of X employee
-	public Float getTotal(int idEmployee){
-		float total =  repo.getTotal(idEmployee);
-		if(total != 0.0f) {
-			return total;
-		}else {
-			return 0.0f;
+	// Get the global total of all the compensations of X employee
+	public Float getGlobalTotal(int idEmployee) {
+		float total = 0;
+		if (repo.getTotal(idEmployee) != null) {
+			total = repo.getTotal(idEmployee);
 		}
+		return total;
+
 	}
 
 	// Find the compensations by a range of dates
-	public List<Compensation> findCompensationsByDates(String sDate, String eDate) throws ParseException {
+	public List<Compensation> findCompensationsByDates(String sDate, String eDate, int uid) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 
 		java.util.Date date1 = sdf.parse(sDate);
@@ -62,12 +63,25 @@ public class CompensationServiceImpl {
 		java.sql.Date endDate = new Date(date2.getTime());
 
 		// review dates entries to avoid errors
-		return repo.findCompensationByDate(startDate, endDate);
+		return repo.findCompensationByDate(startDate, endDate, uid);
 	}
 
 	// Find the compensations by X Month
 	public List<Compensation> findCompensationsByMonthname(int idEmployee, String month, int year) {
 		return repo.findByMonth(idEmployee, month, year);
+	}
+
+	// get the total of Y compensations
+	public Float getTotal(List<Compensation> list) {
+		float total = 0;
+		if (list != null) {
+			Iterator<Compensation> iterator = list.iterator();
+			while (iterator.hasNext()) {
+				Compensation next = iterator.next(); // iterates every object in the list and sum the amounts
+				total += next.getAmount();
+			}
+		}
+		return total;
 	}
 
 }

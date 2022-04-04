@@ -167,16 +167,17 @@ public class SystemsController {
 	// ________view employee's compensation history_______
 	@GetMapping("/employee/{uid}/compensation_history")
 	public String viewCompensation(@PathVariable int uid, Model model) {
-		try {
-			model.addAttribute("employee", emplService.getEmployeeById(uid));
-			List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations
-			Float total = compService.getTotal(uid); // get total
-			model.addAttribute("total", total);
-			model.addAttribute("listComp", compensations);
-		} catch (Exception e) {
-			e.printStackTrace();
+		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations
+		Float globalTotal = compService.getGlobalTotal(uid); // get total
+		model.addAttribute("employee", emplService.getEmployeeById(uid));
+		model.addAttribute("total", globalTotal);
+		model.addAttribute("listComp", compensations);
+		if (globalTotal != 0) {
+			return "compensation_history";
+		}else {
+			return "redirect:/employee/{uid}/compensation_history?empty";
 		}
-		return "compensation_history";
+
 	}
 
 	// ________view employee's compensation details by month______
@@ -196,10 +197,12 @@ public class SystemsController {
 	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid)
 			throws ParseException {
 		model.addAttribute("employee", emplService.getEmployeeById(uid)); // send the employee
-		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate); // get the list of
-																								// compensations by
-																								// dates
+		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate, uid); // get the list of
+																									// compensations by
+																									// dates
 		model.addAttribute("listComp", compensations);
+		Float total = compService.getTotal(compensations);
+		model.addAttribute("total", total);
 		return "compensation_history";
 
 	}

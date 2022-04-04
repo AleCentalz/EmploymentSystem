@@ -59,7 +59,8 @@
 		<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">The information of that employee already
 			exists.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
-		<div class="alert alert-warning" role="alert" th:if="${param.null}">Dates entered exceed the record</div>
+		<div class="alert alert-warning" role="alert" th:if="${param.null}">Dates entered exceed the record.</div>
+		<div class="alert alert-danger" role="alert" th:if="${param.empty}">There are not compensations to show.</div>
 
 		<!-- Date search menu -->
 		<div class="search-menu">
