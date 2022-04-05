@@ -35,6 +35,21 @@ public class CompensationServiceImpl {
 	public Compensation getCompensation(int id) {
 		return repo.getById(id);
 	}
+	
+	//before saving, check if the amount is in the correct ranges
+	public boolean checkAmount(Compensation comp) {
+		String type = comp.getType();
+		double amount = comp.getAmount();
+
+		if(type.equals("Bonus") || type.equals("Commision") || type.equals("Allowance")) {
+			if(amount <= 0) 
+				return false;
+		}else if(type.equals("Adjustment")) {
+			if(amount == 0) 
+				return false;
+		}
+		return true;
+	}
 
 	// Find the compensations of X employee
 	public List<Compensation> findCompensationsByEmployeeId(int idEmployee) {
@@ -44,8 +59,8 @@ public class CompensationServiceImpl {
 	}
 
 	// Get the global total of all the compensations of X employee
-	public Float getGlobalTotal(int idEmployee) {
-		float total = 0;
+	public double getGlobalTotal(int idEmployee) {
+		double total = 0;
 		if (repo.getTotal(idEmployee) != null) {
 			total = repo.getTotal(idEmployee);
 		}
@@ -72,8 +87,8 @@ public class CompensationServiceImpl {
 	}
 
 	// get the total of Y compensations
-	public Float getTotal(List<Compensation> list) {
-		float total = 0;
+	public double getTotal(List<Compensation> list) {
+		double total = 0;
 		if (list != null) {
 			Iterator<Compensation> iterator = list.iterator();
 			while (iterator.hasNext()) {

@@ -136,7 +136,6 @@ public class SystemsController {
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		return "edit_employee";
 	}
-
 	// _______update info employee________
 	@PostMapping("/employee/{uid}")
 	public String updateEmployee(@PathVariable int uid, @ModelAttribute("employee") Employee employee, Model model) {
@@ -163,12 +162,13 @@ public class SystemsController {
 		}
 
 	}
+	
 
 	// ________view employee's compensation history_______
 	@GetMapping("/employee/{uid}/compensation_history")
 	public String viewCompensation(@PathVariable int uid, Model model) {
 		List<Compensation> compensations = compService.findCompensationsByEmployeeId(uid); // obtain all compensations
-		Float globalTotal = compService.getGlobalTotal(uid); // get total
+		double globalTotal = compService.getGlobalTotal(uid); // get total
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		model.addAttribute("total", globalTotal);
 		model.addAttribute("listComp", compensations);
@@ -180,7 +180,6 @@ public class SystemsController {
 		}
 
 	}
-
 	// ________view employee's compensation details by month______
 	@GetMapping("/employee/{uid}/compensation_details/{month}/{year}")
 	public String viewDetails(@PathVariable int uid, @PathVariable String month, @PathVariable int year, Model model) {
@@ -192,7 +191,6 @@ public class SystemsController {
 		model.addAttribute("year", year);
 		return "compensation_details";
 	}
-
 	// __________search compensations by date ____________
 	@GetMapping("/employee/{uid}/compensation_history/search")
 	public String viewCompensationsByDate(Model model, String sDate, String eDate, @PathVariable int uid)
@@ -200,16 +198,16 @@ public class SystemsController {
 		model.addAttribute("employee", emplService.getEmployeeById(uid)); // send the employee
 		List<Compensation> compensations = compService.findCompensationsByDates(sDate, eDate, uid); // get the list of compensations by dates
 		model.addAttribute("listComp", compensations);
-		Float total = compService.getTotal(compensations);
+		double total = compService.getTotal(compensations);
 		model.addAttribute("total", total);
-		if (total != 0) {
-			return "compensation_history";
-		}else {
+		//if the list in empty, tell that there are not compensations to show.
+		if (compensations.isEmpty()) {
 			model.addAttribute("warning", "0 compensations to show.");
+			return "compensation_history";
+		}else {			
 			return "compensation_history";
 		}
 	}
-
 	// ________new compensation form_________________
 	@GetMapping(value = "/employee/{uid}/new_compensation")
 	public String compensationForm(@PathVariable int uid, Model model) {
@@ -218,26 +216,27 @@ public class SystemsController {
 		model.addAttribute(comp);
 		return "add_compensation";
 	}
-
 	// ________add a new compensation__________________
 	@PostMapping("/employee/{uid}/add_newcompensation")
 	public String addCompensation(@ModelAttribute("compensation") @Valid Compensation comp,
 			@PathVariable("uid") int uid) {
 		Employee emp = emplService.getEmployeeById(uid);
 		comp.setIdEmployee(emp);
-		compService.saveCompensation(comp);
-		return "redirect:/employee/{uid}/compensation_history?success";
+		// before saving, check the type and amount received
+		if(compService.checkAmount(comp)) {
+			compService.saveCompensation(comp);
+			return "redirect:/employee/{uid}/compensation_history?success";
+		}else {
+			return "redirect:/employee/{uid}/compensation_history?amountError";
+		}
 	}
-
 	// _______edit compensation______________
 	@GetMapping("/employee/{uid}/edit_compensation/{id}")
-	public String editCompensationForm(@PathVariable int uid, @PathVariable int id, Model model) { // receive the uid to
-																									// get its info
+	public String editCompensationForm(@PathVariable int uid, @PathVariable int id, Model model) { // receive the uid to get its info
 		model.addAttribute("employee", emplService.getEmployeeById(uid));
 		model.addAttribute("compensation", compService.getCompensation(id)); // get the compensation info from the id
 		return "edit_compensation";
 	}
-
 	// _______update compensation______________
 	@PostMapping("/employee/{uid}/edit_compensation/{id}/update")
 	public String editCompensation(@PathVariable int uid, @PathVariable int id,
@@ -249,7 +248,6 @@ public class SystemsController {
 		compService.updateCompensation(existingComp);
 		return "redirect:/employee/{uid}/compensation_history?updatecompensation";
 	}
-
 	// DB error
 	@ExceptionHandler({ SQLException.class, DataAccessException.class })
 	public String databaseError() {

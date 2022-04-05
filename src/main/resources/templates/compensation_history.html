@@ -25,7 +25,6 @@
 			<div id="">
 				<a class="navbar-brand sistem-name" href="/welcome"> Employment System </a>
 			</div>
-			<div id=""></div>
 			<form th:action="@{/logout}" method="post">
 				<button class="btn" type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
 			</form>
@@ -55,11 +54,13 @@
 	<main class="container mb-5">
 		<!-- Employee's alerts -->
 		<div class="alert alert-success" role="alert" th:if="${param.updateuser}">Employee updated successfully.</div>
+		<div class="alert alert-success" role="alert" th:if="${param.success}">Compensation added successfully.</div>
 		<div class="alert alert-success" role="alert" th:if="${param.updatecompensation}">Compensation updated succesfully.</div>
 		<div class="alert alert-danger" role="alert" th:if="${param.duplicate}">The information of that employee already
 			exists.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.invalid}">Enter a valid birth date, please.</div>
 		<div class="alert alert-warning" role="alert" th:if="${param.null}">Dates entered exceed the record.</div>
+		<div class="alert alert-danger" role="alert" th:if="${param.amountError}">Invalid amount entered.</div>
 
 		<!-- Date search menu -->
 		<div class="search-menu">
@@ -90,9 +91,10 @@
 				compensation</a>
 		</div>
 		
-		<!-- Compensations table by year and month -->
+		<!-- Warning for 0 compensations -->
 		<h3 th:text="${warning}" class="text-center" id="warning"></h3>
-
+		
+		<!-- Compensations table by year and month -->
 		<table class="table">
 			<thead class="text-center">
 				<tr class="table-secondary">

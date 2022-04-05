@@ -25,7 +25,6 @@
 			<div id="">
 				<a class="navbar-brand sistem-name" href="/welcome"> Employment System </a>
 			</div>
-			<div id=""></div>
 			<form th:action="@{/logout}" method="post">
 				<button class="btn" type="submit"><i class="fas fa-sign-out-alt fa-lg"></i></button>
 			</form>
@@ -54,7 +53,7 @@
 				</div>
 				<div class="form-group row mx-5 mb-2">
 					<label for="amount">Amount</label>
-					<input type="number" class="form-control" id="amount" min="0" max="80000" th:field="*{amount}"
+					<input type="number" class="form-control" id="amount" max="80000" th:field="*{amount}"
 						required>
 				</div>
 				<div class="form-group row mx-5 mb-2">
