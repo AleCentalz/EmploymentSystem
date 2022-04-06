@@ -22,7 +22,7 @@ public class Compensation {
 	@Column(name = "type", nullable = false)
 	private String type;
 	@Column(name = "amount", nullable = false)
-	private float amount;
+	private double amount;
 	@Column(name = "description", nullable = true)
 	private String description;
 	@Column(name = "date", nullable = false)
@@ -36,7 +36,7 @@ public class Compensation {
 		
 	}
 	
-	public Compensation(int id, String type, float amount, String description, Date date, Employee idEmployee) {
+	public Compensation(int id, String type, double amount, String description, Date date, Employee idEmployee) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -59,10 +59,10 @@ public class Compensation {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public String getDescription() {

@@ -239,14 +239,18 @@ public class SystemsController {
 	}
 	// _______update compensation______________
 	@PostMapping("/employee/{uid}/edit_compensation/{id}/update")
-	public String editCompensation(@PathVariable int uid, @PathVariable int id,
-			@ModelAttribute("compensation") Compensation comp, Model model) {
+	public String editCompensation(@PathVariable int uid, @PathVariable int id, @ModelAttribute("compensation") Compensation comp, Model model) {
 		Compensation existingComp = compService.getCompensation(id);
-		existingComp.setAmount(comp.getAmount());
-		existingComp.setDescription(comp.getDescription());
-
-		compService.updateCompensation(existingComp);
-		return "redirect:/employee/{uid}/compensation_history?updatecompensation";
+		comp.setType(existingComp.getType()); //assign the type because it can't take it from the template
+		// check the amount validation
+		if(compService.checkAmount(comp)) {
+			existingComp.setAmount(comp.getAmount());
+			existingComp.setDescription(comp.getDescription());
+			compService.updateCompensation(existingComp);
+			return "redirect:/employee/{uid}/compensation_history?updatecompensation";
+		}else {
+			return "redirect:/employee/{uid}/compensation_history?amountError";
+		}	
 	}
 	// DB error
 	@ExceptionHandler({ SQLException.class, DataAccessException.class })
